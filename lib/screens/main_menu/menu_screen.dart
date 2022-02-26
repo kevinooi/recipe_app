@@ -1,6 +1,8 @@
 import 'package:astro_flutter/widgets/menu_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../blocs/category/category_bloc.dart';
 import '../../config/custom_color.dart';
 import '../../widgets/food_search_box.dart';
 
@@ -55,21 +57,31 @@ class MenuScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              MenuCard(
-                onTap: () {
-                  Navigator.pushNamed(context, '/home');
+              BlocBuilder<CategoryBloc, CategoryState>(
+                builder: (context, state) {
+                  return MenuCard(
+                    onTap: () {
+                      context.read<CategoryBloc>().add(LoadCategories());
+                      Navigator.pushNamed(context, '/home');
+                    },
+                    imageUrl: 'https://picsum.photos/id/488/65/65',
+                    title: 'Food',
+                  );
                 },
-                imageUrl: 'https://picsum.photos/id/488/65/65',
-                title: 'Food',
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 120),
-                child: MenuCard(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/home');
+                child: BlocBuilder<CategoryBloc, CategoryState>(
+                  builder: (context, state) {
+                    return MenuCard(
+                      onTap: () {
+                        // context.read<CategoryBloc>().add(LoadCategories());
+                        Navigator.pushNamed(context, '/home');
+                      },
+                      imageUrl: 'https://picsum.photos/id/431/65/65',
+                      title: 'Beverages',
+                    );
                   },
-                  imageUrl: 'https://picsum.photos/id/431/65/65',
-                  title: 'Beverages',
                 ),
               ),
             ],
