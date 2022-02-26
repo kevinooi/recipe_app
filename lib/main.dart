@@ -1,7 +1,7 @@
+import 'package:astro_flutter/config/theme.dart';
 import 'package:flutter/material.dart';
 
 import 'config/app_router.dart';
-import 'screens/home/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,11 +12,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Astro Flutter',
       debugShowCheckedModeBanner: false,
+      theme: theme(),
       onGenerateRoute: AppRouter.onGenerateRoute,
-      initialRoute: HomeScreen.routeName,
+      initialRoute: '/',
     );
   }
 }
