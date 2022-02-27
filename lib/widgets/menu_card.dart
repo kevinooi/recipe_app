@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../config/custom_color.dart';
@@ -90,10 +91,35 @@ class MenuCard extends StatelessWidget {
             left: -30,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(80),
-              child: Image.network(
-                // TODO: cache loading
-                imageUrl,
-                fit: BoxFit.cover,
+              child: CachedNetworkImage(
+                imageUrl: imageUrl,
+                placeholder: (context, url) =>
+                    const Center(child: CircularProgressIndicator()),
+                imageBuilder: (context, imageProvider) => Container(
+                  width: 65,
+                  height: 65,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.5),
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                errorWidget: (context, url, error) {
+                  return Container(
+                    height: 65,
+                    width: 65,
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.withOpacity(0.5),
+                    ),
+                    child: const Icon(
+                      Icons.error,
+                      color: Colors.white,
+                    ),
+                  );
+                },
               ),
             ),
           ),
