@@ -1,3 +1,4 @@
+import 'package:astro_flutter/config/extensions.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/home/home_screen.dart';
@@ -5,7 +6,7 @@ import '../screens/main_menu/menu_screen.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
-    print('Route: ${settings.name}');
+    logD('Route: ${settings.name}');
     switch (settings.name) {
       case '/':
         return MenuScreen.route();
