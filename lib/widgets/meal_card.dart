@@ -1,27 +1,34 @@
 import 'dart:math';
+import 'package:astro_flutter/config/custom_color.dart';
+import 'package:astro_flutter/model/meal_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class MealCard extends StatelessWidget {
+  final Meal? meal;
+  final VoidCallback? onTap;
   const MealCard({
     Key? key,
+    this.meal,
+    this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final randomRatings = Random().nextInt(200);
+    final avgRatings = Random().nextInt(5);
+    final totalRatings = Random().nextInt(300);
 
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: () {},
+        onTap: onTap,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             AspectRatio(
               aspectRatio: 16 / 9,
               child: CachedNetworkImage(
-                imageUrl: '',
+                imageUrl: meal?.strMealThumb ?? '',
                 placeholder: (context, url) =>
                     const Center(child: CircularProgressIndicator()),
                 imageBuilder: (context, imageProvider) => Container(
@@ -42,9 +49,9 @@ class MealCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.grey.withOpacity(0.5),
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.error,
-                      color: Colors.white,
+                      color: url.isEmpty ? Colors.transparent : Colors.white,
                     ),
                   );
                 },
@@ -56,50 +63,59 @@ class MealCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Minute by tuk tuk',
-                    style: TextStyle(
+                  Text(
+                    meal?.strMeal ?? '',
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Row(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.star,
                         size: 24,
-                        color: Color(0xff9A2828),
+                        color: meal != null
+                            ? CustomColors.primaryRed
+                            : Colors.transparent,
                       ),
-                      const Text(
-                        '4.9',
+                      Text(
+                        avgRatings.toStringAsFixed(2),
                         style: TextStyle(
-                          color: Color(0xff9A2828),
+                          color: meal != null
+                              ? CustomColors.primaryRed
+                              : Colors.transparent,
                         ),
                       ),
                       Text(
-                        ' ($randomRatings ratings)',
+                        ' ($totalRatings ratings)',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color:
+                              meal != null ? Colors.grey : Colors.transparent,
+                        ),
+                      ),
+                      Text(
+                        meal?.strCategory ?? '',
                         style: const TextStyle(
                           fontSize: 12,
                           color: Colors.grey,
                         ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
-                      const Text(
-                        ' Cafe',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      const Text(
+                      Text(
                         ' \u2022 ',
                         style: TextStyle(
                           fontSize: 12,
-                          color: Color(0xff9A2828),
+                          color: meal != null
+                              ? CustomColors.primaryRed
+                              : Colors.transparent,
                         ),
                       ),
-                      const Text(
-                        'Western Food',
-                        style: TextStyle(
+                      Text(
+                        meal?.strArea ?? '',
+                        style: const TextStyle(
                           fontSize: 12,
                           color: Colors.grey,
                         ),

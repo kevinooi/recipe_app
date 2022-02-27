@@ -1,3 +1,4 @@
+import 'package:astro_flutter/config/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
@@ -38,118 +39,154 @@ class HomeScreen extends StatelessWidget {
           )
         ],
       ),
-      body: ListView(
-        children: [
-          const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const Text(
-                  'Delivering to',
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: Colors.grey,
+      body: RefreshIndicator(
+        onRefresh: () async {
+          context.read<CategoryBloc>().add(LoadCategories());
+          context.read<MealBloc>().add(const LoadMeals(strCategory: ''));
+        },
+        child: ListView(
+          children: [
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const Text(
+                    'Delivering to',
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Colors.grey,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  children: const <Widget>[
-                    Text(
-                      'Current Location',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
+                  const SizedBox(height: 5),
+                  Row(
+                    children: const <Widget>[
+                      Text(
+                        'Current Location',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 20),
-                    Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: Color(0xff9A2828),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 30),
-                const SearchFood(),
-                const SizedBox(height: 30),
-              ],
+                      SizedBox(width: 20),
+                      Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        color: Color(0xff9A2828),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                  const SearchFood(),
+                  const SizedBox(height: 30),
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: 120,
-            child: BlocBuilder<CategoryBloc, CategoryState>(
+            SizedBox(
+              height: 120,
+              child: BlocBuilder<CategoryBloc, CategoryState>(
+                builder: (context, state) {
+                  if (state is CategoryLoading) {
+                    return ListView.separated(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: 5,
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      itemBuilder: (context, i) {
+                        return Shimmer.fromColors(
+                          highlightColor: Colors.white,
+                          baseColor: CustomColors.tertiaryText,
+                          period: const Duration(milliseconds: 800),
+                          child: const CategoryCard(
+                            category: null,
+                            onTap: null,
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(width: 10);
+                      },
+                    );
+                  } else if (state is CategoryLoaded) {
+                    return ListView.separated(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: state.categories.length,
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      itemBuilder: (context, i) {
+                        final category = state.categories[i];
+                        return CategoryCard(
+                          category: category,
+                          onTap: () {
+                            context.read<MealBloc>().add(
+                                  LoadMeals(
+                                    strCategory: category.strCategory ?? '',
+                                  ),
+                                );
+                          },
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(width: 10);
+                      },
+                    );
+                  } else {
+                    return const Text('Something went wrong.');
+                  }
+                },
+              ),
+            ),
+            const SizedBox(height: 40),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                'Popular Food',
+                style: TextStyle(fontSize: 22),
+              ),
+            ),
+            const SizedBox(height: 20),
+            BlocBuilder<MealBloc, MealState>(
               builder: (context, state) {
-                if (state is CategoryLoading) {
-                  return ListView.separated(
+                if (state is MealLoading) {
+                  return ListView.builder(
                     shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 5,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    itemCount: 3,
                     itemBuilder: (context, i) {
                       return Shimmer.fromColors(
                         highlightColor: Colors.white,
-                        baseColor: const Color(0xffE9E9E9),
+                        baseColor: CustomColors.tertiaryText,
                         period: const Duration(milliseconds: 800),
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          width: 80,
-                          decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.5),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(8),
-                            ),
-                          ),
+                        child: MealCard(
+                          meal: null,
+                          onTap: () {},
                         ),
                       );
                     },
-                    separatorBuilder: (context, index) {
-                      return const SizedBox(width: 10);
-                    },
                   );
-                } else if (state is CategoryLoaded) {
-                  return ListView.separated(
+                } else if (state is MealLoaded) {
+                  return ListView.builder(
                     shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: state.categories.length,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: state.meals.length,
                     itemBuilder: (context, i) {
-                      return CategoryCard(
-                        category: state.categories[i],
+                      final meal = state.meals[i];
+                      return MealCard(
+                        meal: meal,
                         onTap: () {},
                       );
                     },
-                    separatorBuilder: (context, index) {
-                      return const SizedBox(width: 10);
-                    },
                   );
                 } else {
-                  return const Text('Something went wrong.');
+                  return const Text('Something went wrong');
                 }
               },
             ),
-          ),
-          const SizedBox(height: 40),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              'Popular Food',
-              style: TextStyle(fontSize: 22),
-            ),
-          ),
-          const SizedBox(height: 20),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: 4,
-            itemBuilder: (context, i) {
-              return const MealCard();
-            },
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -3,12 +3,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CategoryCard extends StatelessWidget {
-  final Category category;
+  final Category? category;
   final VoidCallback? onTap;
 
   const CategoryCard({
     Key? key,
-    required this.category,
+    this.category,
     this.onTap,
   }) : super(key: key);
 
@@ -36,17 +36,17 @@ class CategoryCard extends StatelessWidget {
 class _RoundedBox extends StatelessWidget {
   const _RoundedBox({
     Key? key,
-    required this.category,
+    this.category,
   }) : super(key: key);
 
-  final Category category;
+  final Category? category;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         CachedNetworkImage(
-          imageUrl: category.strCategoryThumb ?? '',
+          imageUrl: category?.strCategoryThumb ?? '',
           imageBuilder: (context, imageProvider) => Container(
             padding: const EdgeInsets.all(5),
             height: 80,
@@ -73,16 +73,16 @@ class _RoundedBox extends StatelessWidget {
                   Radius.circular(8),
                 ),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.error,
-                color: Colors.white,
+                color: url.isEmpty ? Colors.transparent : Colors.white,
               ),
             );
           },
         ),
         const SizedBox(height: 8),
         Text(
-          category.strCategory ?? '',
+          category?.strCategory ?? '',
           style: const TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.bold,
