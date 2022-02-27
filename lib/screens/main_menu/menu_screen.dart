@@ -1,8 +1,11 @@
+import 'package:astro_flutter/blocs/cubit/menu_cubit.dart';
+import 'package:astro_flutter/blocs/meal/meal_bloc.dart';
 import 'package:astro_flutter/widgets/menu_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/category/category_bloc.dart';
+import '../../blocs/drink_category/drink_category_bloc.dart';
 import '../../config/custom_color.dart';
 import '../../widgets/food_search_box.dart';
 
@@ -57,31 +60,28 @@ class MenuScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              BlocBuilder<CategoryBloc, CategoryState>(
-                builder: (context, state) {
-                  return MenuCard(
-                    onTap: () {
-                      context.read<CategoryBloc>().add(LoadCategories());
-                      Navigator.pushNamed(context, '/home');
-                    },
-                    imageUrl: 'https://picsum.photos/id/488/65/65',
-                    title: 'Food',
-                  );
+              MenuCard(
+                onTap: () {
+                  context.read<MenuCubit>().selectFood();
+                  context.read<CategoryBloc>().add(LoadFoodCategories());
+                  context.read<MealBloc>().add(const LoadMeals());
+                  Navigator.pushNamed(context, '/home');
                 },
+                imageUrl: 'https://picsum.photos/id/488/65/65',
+                title: 'Food',
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 120),
-                child: BlocBuilder<CategoryBloc, CategoryState>(
-                  builder: (context, state) {
-                    return MenuCard(
-                      onTap: () {
-                        // context.read<CategoryBloc>().add(LoadCategories());
-                        Navigator.pushNamed(context, '/home');
-                      },
-                      imageUrl: 'https://picsum.photos/id/431/65/65',
-                      title: 'Beverages',
-                    );
+                child: MenuCard(
+                  onTap: () {
+                    context.read<MenuCubit>().selectDrink();
+                    context
+                        .read<DrinkCategoryBloc>()
+                        .add(const LoadDrinkCategories());
+                    Navigator.pushNamed(context, '/home');
                   },
+                  imageUrl: 'https://picsum.photos/id/431/65/65',
+                  title: 'Beverages',
                 ),
               ),
             ],

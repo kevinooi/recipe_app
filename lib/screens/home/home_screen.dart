@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../blocs/blocs.dart';
+import '../../blocs/cubit/menu_cubit.dart';
 import '../../widgets/category_card.dart';
+import '../../widgets/drink_card.dart';
 import '../../widgets/food_search_box.dart';
 import '../../widgets/meal_card.dart';
 
@@ -22,6 +24,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool foodMenuSelected =
+        context.watch<MenuCubit>().state == const MenuInitial(menu: 'Food');
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -41,8 +46,8 @@ class HomeScreen extends StatelessWidget {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          context.read<CategoryBloc>().add(LoadCategories());
-          context.read<MealBloc>().add(const LoadMeals(strCategory: ''));
+          // context.read<CategoryBloc>().add(LoadFoodCategories());
+          // context.read<MealBloc>().add(const LoadMeals(strCategory: ''));
         },
         child: ListView(
           children: [
@@ -85,59 +90,115 @@ class HomeScreen extends StatelessWidget {
             ),
             SizedBox(
               height: 120,
-              child: BlocBuilder<CategoryBloc, CategoryState>(
-                builder: (context, state) {
-                  if (state is CategoryLoading) {
-                    return ListView.separated(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 5,
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      itemBuilder: (context, i) {
-                        return Shimmer.fromColors(
-                          highlightColor: Colors.white,
-                          baseColor: CustomColors.tertiaryText,
-                          period: const Duration(milliseconds: 800),
-                          child: const CategoryCard(
-                            category: null,
-                            onTap: null,
-                          ),
-                        );
+              child: foodMenuSelected
+                  ? BlocBuilder<CategoryBloc, CategoryState>(
+                      builder: (context, state) {
+                        if (state is CategoryLoading) {
+                          return ListView.separated(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: 5,
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            itemBuilder: (context, i) {
+                              return Shimmer.fromColors(
+                                highlightColor: Colors.white,
+                                baseColor: CustomColors.tertiaryText,
+                                period: const Duration(milliseconds: 800),
+                                child: const CategoryCard(
+                                  category: null,
+                                  onTap: null,
+                                ),
+                              );
+                            },
+                            separatorBuilder: (context, index) {
+                              return const SizedBox(width: 10);
+                            },
+                          );
+                        } else if (state is CategoryLoaded) {
+                          return ListView.separated(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: state.categories.length,
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            itemBuilder: (context, i) {
+                              final category = state.categories[i];
+                              return CategoryCard(
+                                category: category,
+                                onTap: () {
+                                  context.read<MealBloc>().add(
+                                        LoadMeals(
+                                          strCategory:
+                                              category.strCategory ?? '',
+                                        ),
+                                      );
+                                },
+                              );
+                            },
+                            separatorBuilder: (context, index) {
+                              return const SizedBox(width: 10);
+                            },
+                          );
+                        } else {
+                          return const Text('Something went wrong.');
+                        }
                       },
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(width: 10);
+                    )
+                  : BlocBuilder<DrinkCategoryBloc, DrinkCategoryState>(
+                      builder: (context, state) {
+                        if (state is DrinkCategoryLoading) {
+                          return ListView.separated(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: 5,
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            itemBuilder: (context, i) {
+                              return Shimmer.fromColors(
+                                highlightColor: Colors.white,
+                                baseColor: CustomColors.tertiaryText,
+                                period: const Duration(milliseconds: 800),
+                                child: const DrinkCard(
+                                  drinkCategory: null,
+                                  onTap: null,
+                                ),
+                              );
+                            },
+                            separatorBuilder: (context, index) {
+                              return const SizedBox(width: 10);
+                            },
+                          );
+                        } else if (state is DrinkCategoryLoaded) {
+                          return ListView.separated(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: state.drinkCategories.length,
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            itemBuilder: (context, i) {
+                              final drinkCategory = state.drinkCategories[i];
+                              return DrinkCard(
+                                drinkCategory: drinkCategory,
+                                onTap: () {
+                                  // context.read<DrinkCategoryBloc>().add(
+                                  //       LoadDrinkCategories(
+                                  //         strDrink:
+                                  //             drinkCategory.strDrink ?? '',
+                                  //       ),
+                                  //     );
+                                },
+                              );
+                            },
+                            separatorBuilder: (context, index) {
+                              return const SizedBox(width: 10);
+                            },
+                          );
+                        } else {
+                          return const Text('Something is wrong');
+                        }
                       },
-                    );
-                  } else if (state is CategoryLoaded) {
-                    return ListView.separated(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: state.categories.length,
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      itemBuilder: (context, i) {
-                        final category = state.categories[i];
-                        return CategoryCard(
-                          category: category,
-                          onTap: () {
-                            context.read<MealBloc>().add(
-                                  LoadMeals(
-                                    strCategory: category.strCategory ?? '',
-                                  ),
-                                );
-                          },
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(width: 10);
-                      },
-                    );
-                  } else {
-                    return const Text('Something went wrong.');
-                  }
-                },
-              ),
+                    ),
             ),
             const SizedBox(height: 40),
             const Padding(
