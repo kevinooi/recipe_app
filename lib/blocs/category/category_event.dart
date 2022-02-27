@@ -9,11 +9,11 @@ abstract class CategoryEvent extends Equatable {
 
 class LoadCategories extends CategoryEvent {}
 
-class UpdateCategories extends CategoryEvent {
-  final List<Category> categories;
+// class UpdateCategories extends CategoryEvent {
+//   final List<Category> categories;
 
-  const UpdateCategories({required this.categories});
+//   const UpdateCategories({required this.categories});
 
-  @override
-  List<Object> get props => [categories];
-}
+//   @override
+//   List<Object> get props => [categories];
+// }

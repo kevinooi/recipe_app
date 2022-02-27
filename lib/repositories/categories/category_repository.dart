@@ -23,6 +23,7 @@ class CategoryRepository extends BaseCategoryRepository {
           return Category.fromJson(category);
         }).toList();
       }
+      return null;
     } catch (e, stackTrace) {
       logE('category', e.toString(), stackTrace);
       throw Exception('error fetching categories: $e $stackTrace');

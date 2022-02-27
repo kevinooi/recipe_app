@@ -21,12 +21,10 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   ) async {
     emit(CategoryLoading());
     try {
-      final categories = await _categoryRepository.getAllCategories();
-      if (categories != null) {
-        emit(
-          CategoryLoaded(categories: categories),
-        );
-      }
+      List<Category>? categories = await _categoryRepository.getAllCategories();
+      emit(
+        CategoryLoaded(categories: categories ?? []),
+      );
     } catch (_) {
       emit(CategoryError());
     }
