@@ -88,7 +88,7 @@ class MealCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        ' ($totalRatings ratings)',
+                        ' ($totalRatings ratings) ',
                         style: TextStyle(
                           fontSize: 12,
                           color:

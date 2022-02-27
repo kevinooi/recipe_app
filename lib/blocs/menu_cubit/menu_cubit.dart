@@ -13,4 +13,6 @@ class MenuCubit extends Cubit<MenuState> {
   void selectDrink() {
     emit(const MenuInitial(menu: 'Drink'));
   }
+
+  bool get isFoodSelected => state == const MenuInitial(menu: 'Food');
 }

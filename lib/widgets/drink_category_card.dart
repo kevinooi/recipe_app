@@ -1,14 +1,14 @@
-import 'package:astro_flutter/model/category_model.dart';
+import 'package:astro_flutter/model/drink_category_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class CategoryCard extends StatelessWidget {
-  final Category? category;
+class DrinkCategoryCard extends StatelessWidget {
+  final DrinkCategory? drinkCategory;
   final VoidCallback? onTap;
 
-  const CategoryCard({
+  const DrinkCategoryCard({
     Key? key,
-    this.category,
+    this.drinkCategory,
     this.onTap,
   }) : super(key: key);
 
@@ -29,7 +29,7 @@ class CategoryCard extends StatelessWidget {
           child: Column(
             children: [
               CachedNetworkImage(
-                imageUrl: category?.strCategoryThumb ?? '',
+                imageUrl: drinkCategory?.strDrinkThumb ?? '',
                 imageBuilder: (context, imageProvider) => Container(
                   padding: const EdgeInsets.all(5),
                   height: 80,
@@ -64,11 +64,17 @@ class CategoryCard extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 8),
-              Text(
-                category?.strCategory ?? '',
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
+              SizedBox(
+                width: 80,
+                child: Text(
+                  drinkCategory?.strDrink ?? '',
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],

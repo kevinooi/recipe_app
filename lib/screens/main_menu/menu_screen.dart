@@ -1,14 +1,10 @@
 import 'package:astro_flutter/blocs/blocs.dart';
-import 'package:astro_flutter/blocs/meal/meal_bloc.dart';
 import 'package:astro_flutter/widgets/menu_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../blocs/category/category_bloc.dart';
-import '../../blocs/drink_category/drink_category_bloc.dart';
-import '../../blocs/menu_cubit/menu_cubit.dart';
 import '../../config/custom_color.dart';
-import '../../widgets/food_search_box.dart';
+import '../../widgets/search_box.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -45,7 +41,7 @@ class MenuScreen extends StatelessWidget {
           // Search food text form field
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
-            child: SearchFood(),
+            child: SearchBox(),
           ),
           const SizedBox(height: 40),
           Stack(
