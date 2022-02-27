@@ -87,7 +87,7 @@ class HomeScreen extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: 5,
-                    padding: const EdgeInsets.only(left: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     itemBuilder: (context, i) {
                       return Shimmer.fromColors(
                         highlightColor: Colors.white,
@@ -95,7 +95,6 @@ class HomeScreen extends StatelessWidget {
                         period: const Duration(milliseconds: 800),
                         child: Container(
                           padding: const EdgeInsets.all(5),
-                          height: 80,
                           width: 80,
                           decoration: BoxDecoration(
                             color: Colors.grey.withOpacity(0.5),
@@ -116,7 +115,7 @@ class HomeScreen extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     physics: const BouncingScrollPhysics(),
                     itemCount: state.categories.length,
-                    padding: const EdgeInsets.only(left: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     itemBuilder: (context, i) {
                       return CategoryCard(
                         category: state.categories[i],
