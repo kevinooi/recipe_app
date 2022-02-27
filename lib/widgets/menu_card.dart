@@ -18,7 +18,6 @@ class MenuCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    // TODO: bloc management
     int itemsNumber = Random().nextInt(200);
 
     return Padding(

@@ -46,7 +46,7 @@ class _RoundedBox extends StatelessWidget {
     return Column(
       children: [
         CachedNetworkImage(
-          imageUrl: category.strCategoryThumb,
+          imageUrl: category.strCategoryThumb ?? '',
           imageBuilder: (context, imageProvider) => Container(
             padding: const EdgeInsets.all(5),
             height: 80,
@@ -82,7 +82,7 @@ class _RoundedBox extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          category.strCategory,
+          category.strCategory ?? '',
           style: const TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.bold,
