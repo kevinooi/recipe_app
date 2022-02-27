@@ -1,4 +1,4 @@
-import 'package:astro_flutter/blocs/cubit/menu_cubit.dart';
+import 'package:astro_flutter/blocs/blocs.dart';
 import 'package:astro_flutter/blocs/meal/meal_bloc.dart';
 import 'package:astro_flutter/widgets/menu_card.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/category/category_bloc.dart';
 import '../../blocs/drink_category/drink_category_bloc.dart';
+import '../../blocs/menu_cubit/menu_cubit.dart';
 import '../../config/custom_color.dart';
 import '../../widgets/food_search_box.dart';
 
@@ -78,6 +79,7 @@ class MenuScreen extends StatelessWidget {
                     context
                         .read<DrinkCategoryBloc>()
                         .add(const LoadDrinkCategories());
+                    context.read<DrinkBloc>().add(const LoadDrinks());
                     Navigator.pushNamed(context, '/home');
                   },
                   imageUrl: 'https://picsum.photos/id/431/65/65',

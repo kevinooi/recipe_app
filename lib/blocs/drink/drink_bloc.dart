@@ -11,22 +11,22 @@ class DrinkBloc extends Bloc<DrinkEvent, DrinkState> {
   DrinkBloc({required DrinkRepository drinkRepository})
       : _drinkRepository = drinkRepository,
         super(DrinkLoading()) {
-    // on<LoadDrinks>(_onLoadDrinks);
+    on<LoadDrinks>(_onLoadDrinks);
   }
 
-  // void _onLoadDrinks(
-  //   LoadDrinks event,
-  //   Emitter<DrinkState> emit,
-  // ) async {
-  //   emit(DrinkLoading());
-  //   try {
-  //     List<Drink>? drinks =
-  //         await _drinkRepository.getDrinksByCategory(event.strCategory);
-  //     emit(
-  //       DrinkLoaded(drinks: drinks ?? []),
-  //     );
-  //   } catch (_) {
-  //     emit(DrinkError());
-  //   }
-  // }
+  void _onLoadDrinks(
+    LoadDrinks event,
+    Emitter<DrinkState> emit,
+  ) async {
+    emit(DrinkLoading());
+    try {
+      List<Drink>? drinks =
+          await _drinkRepository.getDrinksByCategory(event.strDrink);
+      emit(
+        DrinkLoaded(drinks: drinks ?? []),
+      );
+    } catch (_) {
+      emit(DrinkError());
+    }
+  }
 }

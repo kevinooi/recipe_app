@@ -9,14 +9,13 @@ class DrinkRepository extends BaseDrinkRepository {
   DrinkRepository();
 
   @override
-  Future<List<Drink>?> getDrinksByCategory(String strCategory) async {
+  Future<List<Drink>?> getDrinksByCategory(String strDrink) async {
     try {
       final response = await http.get(
-        //  TODO: WRONG URL
         Uri.parse(
-            'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=$strCategory'),
+            'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=$strDrink'),
       );
-      logI('response', response);
+      logI('drinks response', response);
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
