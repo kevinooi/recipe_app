@@ -87,7 +87,7 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 30),
-                  const SearchBox(),
+                  SearchBox(suffixText: isFoodSelected ? 'Food' : 'Drink'),
                   const SizedBox(height: 30),
                 ],
               ),

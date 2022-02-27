@@ -41,7 +41,7 @@ class MenuScreen extends StatelessWidget {
           // Search food text form field
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
-            child: SearchBox(),
+            child: SearchBox(suffixText: 'Food/Drinks'),
           ),
           const SizedBox(height: 40),
           Stack(
