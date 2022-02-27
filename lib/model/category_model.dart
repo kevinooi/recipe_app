@@ -1,16 +1,22 @@
+import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'category_model.g.dart';
+
+@JsonSerializable()
+@CopyWith()
 class Category extends Equatable {
-  final String idCategory;
-  final String strCategory;
-  final String strCategoryThumb;
-  final String strCategoryDescription;
+  final String? idCategory;
+  final String? strCategory;
+  final String? strCategoryThumb;
+  final String? strCategoryDescription;
 
   const Category({
-    required this.idCategory,
-    required this.strCategory,
-    required this.strCategoryThumb,
-    required this.strCategoryDescription,
+    this.idCategory,
+    this.strCategory,
+    this.strCategoryThumb,
+    this.strCategoryDescription,
   });
 
   @override
@@ -21,31 +27,8 @@ class Category extends Equatable {
         strCategoryDescription,
       ];
 
-  Category copyWith({
-    required String idCategory,
-    required String strCategory,
-    required String strCategoryThumb,
-    required String strCategoryDescription,
-  }) {
-    return Category(
-      idCategory: this.idCategory,
-      strCategory: this.strCategory,
-      strCategoryThumb: this.strCategoryThumb,
-      strCategoryDescription: this.strCategoryDescription,
-    );
-  }
+  factory Category.fromJson(Map<String, dynamic> json) =>
+      _$CategoryFromJson(json);
 
-  factory Category.fromJson(Map<String, dynamic> json) {
-    return Category(
-      idCategory: json['idCategory'],
-      strCategory: json['strCategory'],
-      strCategoryThumb: json['strCategoryThumb'],
-      strCategoryDescription: json['strCategoryDescription'],
-    );
-  }
-
-  @override
-  String toString() {
-    return 'Category { idCategory: $idCategory, strCategory: $strCategory, strCategoryThumb: $strCategoryThumb, strCategoryDescription: $strCategoryDescription }';
-  }
+  Map<String, dynamic> toJson() => _$CategoryToJson(this);
 }
