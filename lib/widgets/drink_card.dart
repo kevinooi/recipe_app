@@ -2,11 +2,11 @@ import 'package:astro_flutter/model/drink_category_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class DrinkCard extends StatelessWidget {
+class DrinkCategoryCard extends StatelessWidget {
   final DrinkCategory? drinkCategory;
   final VoidCallback? onTap;
 
-  const DrinkCard({
+  const DrinkCategoryCard({
     Key? key,
     this.drinkCategory,
     this.onTap,

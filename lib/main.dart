@@ -1,4 +1,3 @@
-import 'package:astro_flutter/blocs/cubit/menu_cubit.dart';
 import 'package:astro_flutter/config/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +6,7 @@ import 'blocs/category/category_bloc.dart';
 import 'blocs/drink/drink_bloc.dart';
 import 'blocs/drink_category/drink_category_bloc.dart';
 import 'blocs/meal/meal_bloc.dart';
+import 'blocs/menu_cubit/menu_cubit.dart';
 import 'config/app_router.dart';
 import 'repositories/categories/category_repository.dart';
 import 'repositories/drinks/drink_repository.dart';

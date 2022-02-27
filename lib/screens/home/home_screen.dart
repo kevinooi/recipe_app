@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../blocs/blocs.dart';
-import '../../blocs/cubit/menu_cubit.dart';
+import '../../blocs/menu_cubit/menu_cubit.dart';
 import '../../widgets/category_card.dart';
 import '../../widgets/drink_card.dart';
 import '../../widgets/food_search_box.dart';
@@ -159,7 +159,7 @@ class HomeScreen extends StatelessWidget {
                                 highlightColor: Colors.white,
                                 baseColor: CustomColors.tertiaryText,
                                 period: const Duration(milliseconds: 800),
-                                child: const DrinkCard(
+                                child: const DrinkCategoryCard(
                                   drinkCategory: null,
                                   onTap: null,
                                 ),
@@ -178,15 +178,15 @@ class HomeScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             itemBuilder: (context, i) {
                               final drinkCategory = state.drinkCategories[i];
-                              return DrinkCard(
+                              return DrinkCategoryCard(
                                 drinkCategory: drinkCategory,
                                 onTap: () {
-                                  // context.read<DrinkCategoryBloc>().add(
-                                  //       LoadDrinkCategories(
-                                  //         strDrink:
-                                  //             drinkCategory.strDrink ?? '',
-                                  //       ),
-                                  //     );
+                                  context.read<DrinkBloc>().add(
+                                        LoadDrinks(
+                                          strDrink:
+                                              drinkCategory.strDrink ?? '',
+                                        ),
+                                      );
                                 },
                               );
                             },
@@ -201,11 +201,11 @@ class HomeScreen extends StatelessWidget {
                     ),
             ),
             const SizedBox(height: 40),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
-                'Popular Food',
-                style: TextStyle(fontSize: 22),
+                'Popular ' + (foodMenuSelected ? 'Food' : 'Drinks'),
+                style: const TextStyle(fontSize: 22),
               ),
             ),
             const SizedBox(height: 20),
@@ -221,9 +221,9 @@ class HomeScreen extends StatelessWidget {
                         highlightColor: Colors.white,
                         baseColor: CustomColors.tertiaryText,
                         period: const Duration(milliseconds: 800),
-                        child: MealCard(
+                        child: const MealCard(
                           meal: null,
-                          onTap: () {},
+                          onTap: null,
                         ),
                       );
                     },
