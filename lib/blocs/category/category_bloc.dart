@@ -12,16 +12,17 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   CategoryBloc({required CategoryRepository categoryRepository})
       : _categoryRepository = categoryRepository,
         super(CategoryLoading()) {
-    on<LoadCategories>(_onLoadCategories);
+    on<LoadFoodCategories>(_onLoadFoodCategories);
   }
 
-  void _onLoadCategories(
-    LoadCategories event,
+  void _onLoadFoodCategories(
+    LoadFoodCategories event,
     Emitter<CategoryState> emit,
   ) async {
     emit(CategoryLoading());
     try {
-      List<Category>? categories = await _categoryRepository.getAllCategories();
+      List<Category>? categories =
+          await _categoryRepository.getFoodCategories();
       emit(
         CategoryLoaded(categories: categories ?? []),
       );
