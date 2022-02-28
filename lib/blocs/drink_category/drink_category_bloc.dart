@@ -25,7 +25,7 @@ class DrinkCategoryBloc extends Bloc<DrinkCategoryEvent, DrinkCategoryState> {
       List<DrinkCategory>? drinkCategories =
           await _categoryRepository.getDrinkCategories(event.strDrink);
       emit(
-        DrinkCategoryLoaded(drinkCategories: drinkCategories ?? []),
+        DrinkCategoryLoaded(drinkCategories: drinkCategories),
       );
     } catch (_) {
       emit(DrinkCategoryError());

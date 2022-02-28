@@ -45,9 +45,11 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  bloc_test: ^9.0.2
   build_runner: ^2.0.4
-  json_serializable: ^6.1.4
   copy_with_extension_gen: ^4.0.0
+  json_serializable: ^6.1.4
+
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

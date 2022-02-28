@@ -24,7 +24,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       List<Category>? categories =
           await _categoryRepository.getFoodCategories();
       emit(
-        CategoryLoaded(categories: categories ?? []),
+        CategoryLoaded(categories: categories),
       );
     } catch (_) {
       emit(CategoryError());

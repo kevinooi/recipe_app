@@ -12,7 +12,7 @@ class CategoryRepository extends BaseCategoryRepository {
   CategoryRepository();
 
   @override
-  Future<List<Category>?> getFoodCategories() async {
+  Future<List<Category>> getFoodCategories() async {
     try {
       final response = await http.get(
         Uri.parse('https://www.themealdb.com/api/json/v1/1/categories.php'),
@@ -29,7 +29,7 @@ class CategoryRepository extends BaseCategoryRepository {
           }).toList();
         }
       }
-      return null;
+      return [];
     } catch (e, stackTrace) {
       logE('category', e.toString(), stackTrace);
       throw Exception('error fetching categories: $e $stackTrace');
@@ -37,7 +37,7 @@ class CategoryRepository extends BaseCategoryRepository {
   }
 
   @override
-  Future<List<DrinkCategory>?> getDrinkCategories(String strCategory) async {
+  Future<List<DrinkCategory>> getDrinkCategories(String strCategory) async {
     try {
       final response = await http.get(
         Uri.parse(
@@ -55,7 +55,7 @@ class CategoryRepository extends BaseCategoryRepository {
           }).toList();
         }
       }
-      return null;
+      return [];
     } catch (e, stackTrace) {
       logE('DrinkCategories', e.toString(), stackTrace);
       throw Exception('error fetching drink categories: $e $stackTrace');
