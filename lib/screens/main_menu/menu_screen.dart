@@ -59,6 +59,7 @@ class MenuScreen extends StatelessWidget {
               ),
               MenuCard(
                 onTap: () {
+                  //TODO: unit test
                   context.read<MenuCubit>().selectFood();
                   context.read<CategoryBloc>().add(LoadFoodCategories());
                   context.read<MealBloc>().add(const LoadMeals());
@@ -71,6 +72,7 @@ class MenuScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 120),
                 child: MenuCard(
                   onTap: () {
+                    //TODO: unit test
                     context.read<MenuCubit>().selectDrink();
                     context
                         .read<DrinkCategoryBloc>()
