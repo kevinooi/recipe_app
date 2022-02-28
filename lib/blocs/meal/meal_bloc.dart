@@ -23,7 +23,7 @@ class MealBloc extends Bloc<MealEvent, MealState> {
       List<Meal>? meals =
           await _mealRepository.getMealsByCategory(event.strCategory);
       emit(
-        MealLoaded(meals: meals ?? []),
+        MealLoaded(meals: meals),
       );
     } catch (_) {
       emit(MealError());

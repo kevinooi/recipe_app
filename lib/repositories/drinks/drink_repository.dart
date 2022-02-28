@@ -9,7 +9,7 @@ class DrinkRepository extends BaseDrinkRepository {
   DrinkRepository();
 
   @override
-  Future<List<Drink>?> getDrinksByCategory(String strDrink) async {
+  Future<List<Drink>> getDrinksByCategory(String strDrink) async {
     try {
       final response = await http.get(
         Uri.parse(
@@ -27,7 +27,7 @@ class DrinkRepository extends BaseDrinkRepository {
           }).toList();
         }
       }
-      return null;
+      return [];
     } catch (e, stackTrace) {
       logE('Drinks', e.toString(), stackTrace);
       throw Exception('error fetching drinks: $e $stackTrace');

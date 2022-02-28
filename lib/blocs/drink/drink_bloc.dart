@@ -23,7 +23,7 @@ class DrinkBloc extends Bloc<DrinkEvent, DrinkState> {
       List<Drink>? drinks =
           await _drinkRepository.getDrinksByCategory(event.strDrink);
       emit(
-        DrinkLoaded(drinks: drinks ?? []),
+        DrinkLoaded(drinks: drinks),
       );
     } catch (_) {
       emit(DrinkError());

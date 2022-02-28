@@ -9,7 +9,7 @@ class MealRepository extends BaseMealRepository {
   MealRepository();
 
   @override
-  Future<List<Meal>?> getMealsByCategory(String strCategory) async {
+  Future<List<Meal>> getMealsByCategory(String strCategory) async {
     try {
       final response = await http.get(
         Uri.parse(
@@ -27,7 +27,7 @@ class MealRepository extends BaseMealRepository {
           }).toList();
         }
       }
-      return null;
+      return [];
     } catch (e, stackTrace) {
       logE('meals', e.toString(), stackTrace);
       throw Exception('error fetching meals: $e $stackTrace');
