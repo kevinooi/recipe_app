@@ -32,7 +32,7 @@ const mockFoodCategories = [
 const mockDrinkCategories = [
   DrinkCategory(
     idDrink: '1',
-    strDrink: 'Drink Drink 1',
+    strDrink: 'Drink Category 1',
     strDrinkThumb: 'https://picsum.photos/id/431/80/80',
   ),
   DrinkCategory(

@@ -1,35 +1,21 @@
-import 'package:astro_flutter/blocs/category_cubit/category_cubit.dart';
-import 'package:astro_flutter/blocs/drink_category_cubit/drink_category_cubit.dart';
+import 'package:astro_flutter/blocs/cache_drink_category/drink_category_cubit.dart';
 import 'package:astro_flutter/repositories/repositories.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('CategoryCubit and DrinkCategoryCubit test', () {
-    late CategoryCubit categoryCubit;
+  group('DrinkCategoryCubit test', () {
     late DrinkCategoryCubit drinkCategoryCubit;
     MockCategoryRepository mockCategoryRepository;
 
     setUp(() {
       EquatableConfig.stringify = true;
       mockCategoryRepository = MockCategoryRepository();
-      categoryCubit = CategoryCubit(mockCategoryRepository);
       drinkCategoryCubit = DrinkCategoryCubit(mockCategoryRepository);
     });
 
-    blocTest<CategoryCubit, CategoryState>(
-      'emits [CategoryLoading, CategoryLoaded] states for'
-      'successful categories load',
-      build: () => categoryCubit,
-      act: (cubit) => cubit.getCategories(),
-      expect: () => [
-        CategoryLoading(),
-        const CategoryLoaded(categories: mockFoodCategories),
-      ],
-    );
-
-    blocTest<DrinkCategoryCubit, DrinkCategoryState>(
+    blocTest<DrinkCategoryCubit, CacheDrinkCategoryState>(
       'emits [DrinkCategoryLoading, DrinkCategoryLoaded] states for'
       'successful drink categories load',
       build: () => drinkCategoryCubit,
@@ -40,8 +26,16 @@ void main() {
       ],
     );
 
+    blocTest<DrinkCategoryCubit, CacheDrinkCategoryState>(
+      'emits [DrinkCategoryError] state if contract is null',
+      build: () => DrinkCategoryCubit(null),
+      act: (cubit) => cubit.getDrinkCategories(),
+      expect: () => [
+        DrinkCategoryError(),
+      ],
+    );
+
     tearDown(() {
-      categoryCubit.close();
       drinkCategoryCubit.close();
     });
   });

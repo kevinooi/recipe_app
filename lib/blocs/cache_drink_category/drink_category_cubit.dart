@@ -4,20 +4,22 @@ import 'package:equatable/equatable.dart';
 
 import '../../../repositories/repositories.dart';
 
-part 'drink_category_state.dart';
+part 'cache_drink_category_state.dart';
 
-class DrinkCategoryCubit extends Cubit<DrinkCategoryState> {
+class DrinkCategoryCubit extends Cubit<CacheDrinkCategoryState> {
   DrinkCategoryCubit(this.mockCategoryRepository)
       : super(DrinkCategoryLoading());
 
-  final MockCategoryRepository mockCategoryRepository;
+  final MockCategoryRepository? mockCategoryRepository;
 
   void getDrinkCategories() async {
+    if (mockCategoryRepository == null) return emit(DrinkCategoryError());
+
     try {
       emit(DrinkCategoryLoading());
 
       final drinkCategories =
-          await mockCategoryRepository.getDrinkCategories('');
+          await mockCategoryRepository!.getDrinkCategories('');
       emit(DrinkCategoryLoaded(drinkCategories: drinkCategories));
     } catch (_) {
       emit(DrinkCategoryError());
