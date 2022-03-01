@@ -15,6 +15,10 @@ void main() {
       categoryCubit = CategoryCubit(mockCategoryRepository);
     });
 
+    test("expect [CategoryLoading] for category cubit initial state", () {
+      expect(categoryCubit.state.runtimeType, CategoryLoading);
+    });
+
     blocTest<CategoryCubit, CacheCategoryState>(
       'emits [CategoryLoading, CategoryLoaded] states for'
       'successful categories load',

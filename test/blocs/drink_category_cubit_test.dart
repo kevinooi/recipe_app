@@ -15,6 +15,11 @@ void main() {
       drinkCategoryCubit = DrinkCategoryCubit(mockCategoryRepository);
     });
 
+    test("expect [DrinkCategoryLoading] for drink category cubit initial state",
+        () {
+      expect(drinkCategoryCubit.state.runtimeType, DrinkCategoryLoading);
+    });
+
     blocTest<DrinkCategoryCubit, CacheDrinkCategoryState>(
       'emits [DrinkCategoryLoading, DrinkCategoryLoaded] states for'
       'successful drink categories load',
