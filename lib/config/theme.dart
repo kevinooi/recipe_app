@@ -65,12 +65,12 @@ ThemeData theme() {
       bodyText1: TextStyle(
         color: CustomColors.primaryText,
         fontWeight: FontWeight.normal,
-        fontSize: 12,
+        fontSize: 14,
       ),
       bodyText2: TextStyle(
         color: CustomColors.primaryText,
         fontWeight: FontWeight.normal,
-        fontSize: 10,
+        fontSize: 12,
       ),
     ),
   );

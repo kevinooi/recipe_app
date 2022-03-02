@@ -276,7 +276,9 @@ class _MealList extends StatelessWidget {
               final meal = state.meals[i];
               return MealCard(
                 meal: meal,
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, '/detail');
+                },
               );
             },
           );
@@ -323,7 +325,9 @@ class _DrinksList extends StatelessWidget {
               final drink = state.drinks[i];
               return DrinkCard(
                 drink: drink,
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, '/detail');
+                },
               );
             },
           );
