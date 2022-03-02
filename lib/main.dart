@@ -56,7 +56,6 @@ class MyApp extends StatelessWidget {
               drinkRepository: context.read<DrinkRepository>(),
             ),
           ),
-          BlocProvider(create: (context) => ServingCubit()),
         ],
         child: MaterialApp(
           title: 'Astro Flutter',

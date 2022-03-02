@@ -28,7 +28,6 @@ class IngredientTab extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        //
                         Text(
                           'Ingredients For',
                           style: Theme.of(context)
