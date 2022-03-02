@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../blocs/serving/serving_cubit.dart';
+import '../blocs/blocs.dart';
 import '../config/custom_color.dart';
 import '../model/local/detail_model.dart';
 

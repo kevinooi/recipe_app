@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isFoodSelected = context.watch<MenuCubit>().isFoodSelected;
+    bool foodMenu = context.watch<MenuCubit>().foodMenu;
 
     return Scaffold(
       appBar: AppBar(
@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          if (isFoodSelected) {
+          if (foodMenu) {
             context.read<CategoryBloc>().add(LoadFoodCategories());
             context.read<MealBloc>().add(const LoadMeals());
           } else {
@@ -88,27 +88,26 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 30),
-                  SearchBox(suffixText: isFoodSelected ? 'Food' : 'Drink'),
+                  SearchBox(suffixText: foodMenu ? 'Food' : 'Drink'),
                   const SizedBox(height: 30),
                 ],
               ),
             ),
             SizedBox(
               height: 140,
-              child: isFoodSelected
-                  ? const _FoodCategories()
-                  : const _DrinkCategories(),
+              child:
+                  foodMenu ? const _FoodCategories() : const _DrinkCategories(),
             ),
             const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
-                'Popular ' + (isFoodSelected ? 'Food' : 'Drinks'),
+                'Popular ' + (foodMenu ? 'Food' : 'Drinks'),
                 style: const TextStyle(fontSize: 22),
               ),
             ),
             const SizedBox(height: 20),
-            isFoodSelected ? const _MealList() : const _DrinksList(),
+            foodMenu ? const _MealList() : const _DrinksList(),
           ],
         ),
       ),
