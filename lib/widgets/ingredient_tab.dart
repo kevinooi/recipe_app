@@ -152,7 +152,10 @@ class IngredientTab extends StatelessWidget {
                           ),
                           const SizedBox(width: 15),
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment:
+                                ingredient.measurement.isNotEmpty
+                                    ? CrossAxisAlignment.start
+                                    : CrossAxisAlignment.center,
                             children: [
                               Text(
                                 ingredient.ingredient,
@@ -161,14 +164,17 @@ class IngredientTab extends StatelessWidget {
                                     .headline4!
                                     .copyWith(fontWeight: FontWeight.w500),
                               ),
-                              const SizedBox(height: 5),
-                              Text(
-                                ingredient.measurement,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline6!
-                                    .copyWith(color: CustomColors.tertiaryText),
-                              ),
+                              if (ingredient.measurement.isNotEmpty) ...[
+                                const SizedBox(height: 5),
+                                Text(
+                                  ingredient.measurement,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline6!
+                                      .copyWith(
+                                          color: CustomColors.tertiaryText),
+                                ),
+                              ],
                             ],
                           ),
                         ],
