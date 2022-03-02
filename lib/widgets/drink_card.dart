@@ -4,6 +4,8 @@ import 'package:astro_flutter/model/drink_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../config/extensions.dart';
+
 class DrinkCard extends StatelessWidget {
   final Drink? drink;
   final VoidCallback? onTap;
@@ -15,7 +17,7 @@ class DrinkCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final avgRatings = Random().nextInt(5);
+    final avgRatings = doubleInRange(2, 5);
     final totalRatings = Random().nextInt(300);
 
     return Material(
@@ -80,7 +82,7 @@ class DrinkCard extends StatelessWidget {
                             : Colors.transparent,
                       ),
                       Text(
-                        avgRatings.toStringAsFixed(2),
+                        avgRatings.toStringAsFixed(1),
                         style: TextStyle(
                           color: drink != null
                               ? CustomColors.primaryRed

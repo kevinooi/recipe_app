@@ -4,6 +4,8 @@ import 'package:astro_flutter/model/meal_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../config/extensions.dart';
+
 class MealCard extends StatelessWidget {
   final Meal? meal;
   final VoidCallback? onTap;
@@ -15,7 +17,7 @@ class MealCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final avgRatings = Random().nextInt(5);
+    final avgRatings = doubleInRange(2, 5);
     final totalRatings = Random().nextInt(300);
 
     return Material(
@@ -80,7 +82,7 @@ class MealCard extends StatelessWidget {
                             : Colors.transparent,
                       ),
                       Text(
-                        avgRatings.toStringAsFixed(2),
+                        avgRatings.toStringAsFixed(1),
                         style: TextStyle(
                           color: meal != null
                               ? CustomColors.primaryRed
