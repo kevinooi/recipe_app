@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../blocs/serving/serving_cubit.dart';
 import '../config/custom_color.dart';
 import '../model/local/detail_model.dart';
 
@@ -18,156 +20,165 @@ class IngredientTab extends StatelessWidget {
       child: (detail.meal?.ingredientList.isNotEmpty ??
               detail.drink?.ingredientList.isNotEmpty ??
               false)
-          ? Column(children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      const SizedBox(height: 25),
-                      Text(
-                        'Ingredients For',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline3!
-                            .copyWith(fontSize: 20),
-                      ),
-                      const SizedBox(height: 5),
-                      // TODO: counter cubit
-                      Text(
-                        '2 Servings',
-                        style: Theme.of(context).textTheme.headline4!.copyWith(
-                              fontWeight: FontWeight.normal,
-                              color: CustomColors.primaryText.withAlpha(200),
-                            ),
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  Row(
-                    children: const <Widget>[
-                      _RoundButton(
-                        icon: Icon(
-                          Icons.add,
-                          size: 20,
-                          color: Colors.white,
+          ? Column(
+              children: [
+                const SizedBox(height: 25),
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        //
+                        Text(
+                          'Ingredients For',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline3!
+                              .copyWith(fontSize: 20),
                         ),
-                        color: CustomColors.secondaryRed,
-                      ),
-                      SizedBox(width: 15),
-                      Text(
-                        // TODO: counter state
-                        '1',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      SizedBox(width: 15),
-                      _RoundButton(
-                        icon: Icon(
-                          Icons.remove,
-                          size: 20,
-                          color: Colors.white,
-                        ),
-                        // TODO: check counter to change color
-                        color: Colors.grey,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              const Divider(color: Colors.black26, height: 0, thickness: 0.2),
-              Expanded(
-                child: ListView.separated(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: detail.meal?.ingredientList.length ??
-                      detail.drink?.ingredientList.length ??
-                      0,
-                  separatorBuilder: (context, i) {
-                    return const Divider(
-                      color: Colors.black26,
-                      height: 20,
-                      thickness: 0.2,
-                    );
-                  },
-                  itemBuilder: (ctx, i) {
-                    final ingredient =
-                        (detail.meal?.ingredientList.isNotEmpty ?? false)
-                            ? detail.meal!.ingredientList[i]
-                            : detail.drink!.ingredientList[i];
-
-                    return Row(
-                      children: [
-                        CachedNetworkImage(
-                          imageUrl: detail.meal?.strMealThumb ??
-                              detail.drink?.strDrinkThumb ??
-                              'https://picsum.photos/id/488/20/20',
-                          imageBuilder: (context, imageProvider) => Container(
-                            padding: const EdgeInsets.all(2),
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              color: CustomColors.tertiaryText,
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(12),
+                        const SizedBox(height: 5),
+                        Text(
+                          '${context.watch<ServingCubit>().state} Servings',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .copyWith(
+                                fontWeight: FontWeight.normal,
+                                color: CustomColors.primaryText.withAlpha(200),
                               ),
-                              image: DecorationImage(
-                                image: imageProvider,
-                                fit: BoxFit.contain,
-                              ),
-                            ),
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        _RoundButton(
+                          onTap: () => context.read<ServingCubit>().increment(),
+                          icon: const Icon(
+                            Icons.add,
+                            size: 16,
+                            color: Colors.white,
                           ),
-                          errorWidget: (context, url, error) {
-                            return Container(
+                          color: CustomColors.secondaryRed,
+                        ),
+                        const SizedBox(width: 10),
+                        SizedBox(
+                          width: 20,
+                          child: Text(
+                            '${context.watch<ServingCubit>().state}',
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        _RoundButton(
+                          onTap: () => context.read<ServingCubit>().decrement(),
+                          icon: const Icon(
+                            Icons.remove,
+                            size: 16,
+                            color: Colors.white,
+                          ),
+                          color: context.watch<ServingCubit>().decrementColor,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                const Divider(color: Colors.black26, height: 0, thickness: 0.2),
+                Expanded(
+                  child: ListView.separated(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: detail.meal?.ingredientList.length ??
+                        detail.drink?.ingredientList.length ??
+                        0,
+                    separatorBuilder: (context, i) {
+                      return const Divider(
+                        color: Colors.black26,
+                        height: 20,
+                        thickness: 0.2,
+                      );
+                    },
+                    itemBuilder: (ctx, i) {
+                      final ingredient =
+                          (detail.meal?.ingredientList.isNotEmpty ?? false)
+                              ? detail.meal!.ingredientList[i]
+                              : detail.drink!.ingredientList[i];
+
+                      return Row(
+                        children: [
+                          CachedNetworkImage(
+                            imageUrl: detail.meal?.strMealThumb ??
+                                detail.drink?.strDrinkThumb ??
+                                'https://picsum.photos/id/488/20/20',
+                            imageBuilder: (context, imageProvider) => Container(
+                              padding: const EdgeInsets.all(2),
                               height: 40,
                               width: 40,
-                              padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
-                                color: Colors.grey.withOpacity(0.5),
+                                color: CustomColors.tertiaryText,
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(12),
                                 ),
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.contain,
+                                ),
                               ),
-                              child: Icon(
-                                Icons.error,
-                                color: url.isEmpty
-                                    ? Colors.transparent
-                                    : Colors.white,
+                            ),
+                            errorWidget: (context, url, error) {
+                              return Container(
+                                height: 40,
+                                width: 40,
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(12),
+                                  ),
+                                ),
+                                child: Icon(
+                                  Icons.error,
+                                  color: url.isEmpty
+                                      ? Colors.transparent
+                                      : Colors.white,
+                                ),
+                              );
+                            },
+                          ),
+                          const SizedBox(width: 15),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                ingredient.ingredient,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline4!
+                                    .copyWith(fontWeight: FontWeight.w500),
                               ),
-                            );
-                          },
-                        ),
-                        const SizedBox(width: 15),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              ingredient.ingredient,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline4!
-                                  .copyWith(fontWeight: FontWeight.w500),
-                            ),
-                            const SizedBox(height: 5),
-                            Text(
-                              ingredient.measurement,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6!
-                                  .copyWith(color: CustomColors.tertiaryText),
-                            ),
-                          ],
-                        ),
-                      ],
-                    );
-                  },
+                              const SizedBox(height: 5),
+                              Text(
+                                ingredient.measurement,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline6!
+                                    .copyWith(color: CustomColors.tertiaryText),
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ])
+              ],
+            )
           : Center(
               child: Text(
                 'No Ingredients provided',
@@ -182,10 +193,12 @@ class IngredientTab extends StatelessWidget {
 }
 
 class _RoundButton extends StatelessWidget {
+  final VoidCallback onTap;
   final Icon icon;
   final Color color;
   const _RoundButton({
     Key? key,
+    required this.onTap,
     required this.icon,
     required this.color,
   }) : super(key: key);
@@ -200,12 +213,12 @@ class _RoundButton extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {},
+          onTap: onTap,
           customBorder: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           ),
           child: Container(
-            padding: const EdgeInsets.all(4),
+            padding: const EdgeInsets.all(8),
             child: icon,
           ),
         ),

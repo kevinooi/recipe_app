@@ -1,3 +1,4 @@
+import 'package:astro_flutter/blocs/serving/serving_cubit.dart';
 import 'package:astro_flutter/config/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
               drinkRepository: context.read<DrinkRepository>(),
             ),
           ),
+          BlocProvider(create: (context) => ServingCubit()),
         ],
         child: MaterialApp(
           title: 'Astro Flutter',
