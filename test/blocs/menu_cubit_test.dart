@@ -10,41 +10,41 @@ void main() {
       menuCubit = MenuCubit();
     });
 
-    test("expect MenuInitial('Food') for menu cubit initial state", () {
+    test("expect 'Food' for menu cubit initial state", () {
       expect(
         menuCubit.state,
-        const MenuInitial(menu: 'Food'),
+        'Food',
       );
     });
 
-    test('expect true for isFoodSelected flag if selectFood', () {
+    test('expect true for foodMenu flag if selectFood', () {
       menuCubit.selectFood();
       expect(
-        menuCubit.isFoodSelected,
+        menuCubit.foodMenu,
         true,
       );
     });
 
-    test('expect false for isFoodSelected flag if selectDrink', () {
+    test('expect false for foodMenu flag if selectDrink', () {
       menuCubit.selectDrink();
       expect(
-        menuCubit.isFoodSelected,
+        menuCubit.foodMenu,
         false,
       );
     });
 
-    blocTest<MenuCubit, MenuState>(
-      "expect [MenuInitial('Food')] for selectFood",
+    blocTest<MenuCubit, String>(
+      "expect ['Food'] for selectFood",
       build: () => menuCubit,
       act: (cubit) => cubit.selectFood(),
-      expect: () => [const MenuInitial(menu: 'Food')],
+      expect: () => ['Food'],
     );
 
-    blocTest<MenuCubit, MenuState>(
-      "expect [MenuInitial('Drink')] for selectDrink",
+    blocTest<MenuCubit, String>(
+      "expect ['Drink'] for selectDrink",
       build: () => menuCubit,
       act: (cubit) => cubit.selectDrink(),
-      expect: () => [const MenuInitial(menu: 'Drink')],
+      expect: () => ['Drink'],
     );
 
     tearDown(() {
