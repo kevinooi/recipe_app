@@ -168,6 +168,50 @@ class Drink extends Equatable {
         dateModified,
       ];
 
+  List<String> get ingredients {
+    List<String> results = [];
+
+    if (strIngredient1?.isNotEmpty ?? false) results.add(strIngredient1!);
+    if (strIngredient2?.isNotEmpty ?? false) results.add(strIngredient2!);
+    if (strIngredient3?.isNotEmpty ?? false) results.add(strIngredient3!);
+    if (strIngredient4?.isNotEmpty ?? false) results.add(strIngredient4!);
+    if (strIngredient5?.isNotEmpty ?? false) results.add(strIngredient5!);
+    if (strIngredient6?.isNotEmpty ?? false) results.add(strIngredient6!);
+    if (strIngredient7?.isNotEmpty ?? false) results.add(strIngredient7!);
+    if (strIngredient8?.isNotEmpty ?? false) results.add(strIngredient8!);
+    if (strIngredient9?.isNotEmpty ?? false) results.add(strIngredient9!);
+    if (strIngredient10?.isNotEmpty ?? false) results.add(strIngredient10!);
+    if (strIngredient11?.isNotEmpty ?? false) results.add(strIngredient11!);
+    if (strIngredient12?.isNotEmpty ?? false) results.add(strIngredient12!);
+    if (strIngredient13?.isNotEmpty ?? false) results.add(strIngredient13!);
+    if (strIngredient14?.isNotEmpty ?? false) results.add(strIngredient14!);
+    if (strIngredient15?.isNotEmpty ?? false) results.add(strIngredient15!);
+
+    return results;
+  }
+
+  List<String> get measures {
+    List<String> results = [];
+
+    if (strMeasure1?.isNotEmpty ?? false) results.add(strMeasure1!);
+    if (strMeasure2?.isNotEmpty ?? false) results.add(strMeasure2!);
+    if (strMeasure3?.isNotEmpty ?? false) results.add(strMeasure3!);
+    if (strMeasure4?.isNotEmpty ?? false) results.add(strMeasure4!);
+    if (strMeasure5?.isNotEmpty ?? false) results.add(strMeasure5!);
+    if (strMeasure6?.isNotEmpty ?? false) results.add(strMeasure6!);
+    if (strMeasure7?.isNotEmpty ?? false) results.add(strMeasure7!);
+    if (strMeasure8?.isNotEmpty ?? false) results.add(strMeasure8!);
+    if (strMeasure9?.isNotEmpty ?? false) results.add(strMeasure9!);
+    if (strMeasure10?.isNotEmpty ?? false) results.add(strMeasure10!);
+    if (strMeasure11?.isNotEmpty ?? false) results.add(strMeasure11!);
+    if (strMeasure12?.isNotEmpty ?? false) results.add(strMeasure12!);
+    if (strMeasure13?.isNotEmpty ?? false) results.add(strMeasure13!);
+    if (strMeasure14?.isNotEmpty ?? false) results.add(strMeasure14!);
+    if (strMeasure15?.isNotEmpty ?? false) results.add(strMeasure15!);
+
+    return results;
+  }
+
   factory Drink.fromJson(Map<String, dynamic> json) => _$DrinkFromJson(json);
 
   Map<String, dynamic> toJson() => _$DrinkToJson(this);

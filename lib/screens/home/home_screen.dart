@@ -1,4 +1,5 @@
 import 'package:astro_flutter/config/custom_color.dart';
+import 'package:astro_flutter/model/local/detail_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
@@ -277,7 +278,11 @@ class _MealList extends StatelessWidget {
               return MealCard(
                 meal: meal,
                 onTap: () {
-                  Navigator.pushNamed(context, '/detail');
+                  Navigator.pushNamed(
+                    context,
+                    '/detail',
+                    arguments: Detail(meal: meal),
+                  );
                 },
               );
             },
@@ -326,7 +331,11 @@ class _DrinksList extends StatelessWidget {
               return DrinkCard(
                 drink: drink,
                 onTap: () {
-                  Navigator.pushNamed(context, '/detail');
+                  Navigator.pushNamed(
+                    context,
+                    '/detail',
+                    arguments: Detail(drink: drink),
+                  );
                 },
               );
             },

@@ -2,16 +2,19 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../config/custom_color.dart';
+import '../model/local/detail_model.dart';
 
 class IngredientTab extends StatelessWidget {
+  final Detail detail;
   const IngredientTab({
     Key? key,
+    required this.detail,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Column(
         children: [
           Row(
@@ -29,6 +32,7 @@ class IngredientTab extends StatelessWidget {
                         .copyWith(fontSize: 20),
                   ),
                   const SizedBox(height: 5),
+                  // TODO: counter cubit
                   Text(
                     '2 Servings',
                     style: Theme.of(context).textTheme.headline4!.copyWith(
@@ -51,7 +55,7 @@ class IngredientTab extends StatelessWidget {
                   ),
                   SizedBox(width: 15),
                   Text(
-                    // counter
+                    // TODO: counter state
                     '1',
                     style: TextStyle(
                       fontSize: 16,
@@ -64,89 +68,112 @@ class IngredientTab extends StatelessWidget {
                       size: 20,
                       color: Colors.white,
                     ),
-                    // check counter
+                    // TODO: check counter to change color
                     color: Colors.grey,
                   ),
                 ],
               ),
             ],
           ),
-          const SizedBox(height: 10),
-          const Divider(color: Colors.black26, height: 30, thickness: 0.2),
-          Expanded(
-            child: ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 4,
-              separatorBuilder: (context, i) {
-                return const Divider(
-                    color: Colors.black26, height: 20, thickness: 0.2);
-              },
-              itemBuilder: (context, i) {
-                return Row(
-                  children: [
-                    CachedNetworkImage(
-                      imageUrl: 'https://picsum.photos/id/488/20/20',
-                      imageBuilder: (context, imageProvider) => Container(
-                        padding: const EdgeInsets.all(2),
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                          color: Colors.grey.withOpacity(0.5),
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(12),
-                          ),
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ),
-                      errorWidget: (context, url, error) {
-                        return Container(
+          const SizedBox(height: 20),
+          const Divider(color: Colors.black26, height: 0, thickness: 0.2),
+          if (detail.meal?.ingredients.isNotEmpty ??
+              detail.drink?.ingredients.isNotEmpty ??
+              false) ...[
+            Expanded(
+              child: ListView.separated(
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: detail.meal?.ingredients.length ??
+                    detail.drink?.ingredients.length ??
+                    0,
+                separatorBuilder: (context, i) {
+                  return const Divider(
+                    color: Colors.black26,
+                    height: 20,
+                    thickness: 0.2,
+                  );
+                },
+                itemBuilder: (ctx, i) {
+                  final ingredient =
+                      (detail.meal?.ingredients.isNotEmpty ?? false)
+                          ? detail.meal!.ingredients[i]
+                          : detail.drink!.ingredients[i];
+
+                  final measurement =
+                      (detail.meal?.measures.isNotEmpty ?? false)
+                          ? detail.meal!.measures[i]
+                          : detail.drink!.measures[i];
+
+                  return Row(
+                    children: [
+                      CachedNetworkImage(
+                        imageUrl: detail.meal?.strMealThumb ??
+                            detail.drink?.strDrinkThumb ??
+                            'https://picsum.photos/id/488/20/20',
+                        imageBuilder: (context, imageProvider) => Container(
+                          padding: const EdgeInsets.all(2),
                           height: 40,
                           width: 40,
-                          padding: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.5),
+                            color: CustomColors.tertiaryText,
                             borderRadius: const BorderRadius.all(
                               Radius.circular(12),
                             ),
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.contain,
+                            ),
                           ),
-                          child: Icon(
-                            Icons.error,
-                            color:
-                                url.isEmpty ? Colors.transparent : Colors.white,
+                        ),
+                        errorWidget: (context, url, error) {
+                          return Container(
+                            height: 40,
+                            width: 40,
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.withOpacity(0.5),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(12),
+                              ),
+                            ),
+                            child: Icon(
+                              Icons.error,
+                              color: url.isEmpty
+                                  ? Colors.transparent
+                                  : Colors.white,
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(width: 15),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            ingredient,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline4!
+                                .copyWith(fontWeight: FontWeight.w500),
                           ),
-                        );
-                      },
-                    ),
-                    const SizedBox(width: 15),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Title',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline4!
-                              .copyWith(fontWeight: FontWeight.w500),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          'description',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline6!
-                              .copyWith(color: CustomColors.tertiaryText),
-                        ),
-                      ],
-                    ),
-                  ],
-                );
-              },
+                          const SizedBox(height: 5),
+                          Text(
+                            measurement,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline6!
+                                .copyWith(color: CustomColors.tertiaryText),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
-          ),
+          ],
         ],
       ),
     );

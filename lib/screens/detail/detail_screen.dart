@@ -1,18 +1,21 @@
+import 'package:astro_flutter/widgets/article_markdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../config/custom_color.dart';
+import '../../model/local/detail_model.dart';
 import '../../widgets/ingredient_tab.dart';
 
 class DetailScreen extends HookWidget {
-  const DetailScreen({Key? key}) : super(key: key);
+  final Detail detail;
+  const DetailScreen({Key? key, required this.detail}) : super(key: key);
 
   static const String routeName = '/detail';
 
-  static Route route() {
+  static Route route(Detail detail) {
     return MaterialPageRoute(
-      builder: (_) => const DetailScreen(),
-      settings: const RouteSettings(name: routeName),
+      builder: (_) => DetailScreen(detail: detail),
+      settings: RouteSettings(name: routeName, arguments: detail),
     );
   }
 
@@ -52,7 +55,9 @@ class DetailScreen extends HookWidget {
                       // Background
                       Positioned.fill(
                         child: Image.network(
-                          'https://picsum.photos/id/1000/200',
+                          detail.meal?.strMealThumb ??
+                              detail.drink?.strDrinkThumb ??
+                              'https://picsum.photos/id/1000/200',
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -119,7 +124,8 @@ class DetailScreen extends HookWidget {
               SliverPersistentHeader(
                 floating: true,
                 delegate: _MyDelegate(
-                  TabBar(
+                  detail: detail,
+                  tabBar: TabBar(
                     controller: tabController,
                     indicator: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
@@ -144,20 +150,51 @@ class DetailScreen extends HookWidget {
           body: TabBarView(
             controller: tabController,
             children: [
-              const IngredientTab(),
+              IngredientTab(detail: detail),
+              // Steps Tab
+              if (detail.meal?.strInstructions?.isNotEmpty ??
+                  detail.drink?.strInstructions?.isNotEmpty ??
+                  false)
+                Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Text(
+                        'Steps for making ${detail.meal?.strMeal ?? detail.drink?.strDrink}',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline3!
+                            .copyWith(fontSize: 20),
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    Expanded(
+                      child: ArticleMarkdown(
+                        markdownSource: detail.meal?.strInstructions ??
+                            detail.drink?.strInstructions,
+                      ),
+                    ),
+                  ],
+                )
+              else
+                Center(
+                  child: Text(
+                    'Sorry, no instructions provided',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(fontSize: 20),
+                  ),
+                ),
+              // Nutrition Tab
               Center(
                 child: Text(
-                  'Steps',
-                  style: Theme.of(context).textTheme.headline3,
-                ),
-              ),
-              const Center(
-                child: Text(
                   'Coming Soon',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3!
+                      .copyWith(fontSize: 20),
                 ),
               ),
             ],
@@ -169,7 +206,11 @@ class DetailScreen extends HookWidget {
 }
 
 class _MyDelegate extends SliverPersistentHeaderDelegate {
-  _MyDelegate(this.tabBar);
+  _MyDelegate({
+    required this.detail,
+    required this.tabBar,
+  });
+  final Detail detail;
   final TabBar tabBar;
 
   @override
@@ -181,10 +222,7 @@ class _MyDelegate extends SliverPersistentHeaderDelegate {
     return Column(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(
-            left: 15,
-            right: 15,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           // Action buttons above tab bar
           child: Row(
             children: <Widget>[
@@ -202,7 +240,7 @@ class _MyDelegate extends SliverPersistentHeaderDelegate {
                 ),
               ),
               const SizedBox(width: 3),
-              const Text('350'),
+              Text((detail.meal?.idMeal ?? detail.drink?.idDrink).toString()),
               const Spacer(),
               IconButton(
                 onPressed: () {},

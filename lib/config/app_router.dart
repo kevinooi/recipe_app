@@ -1,6 +1,7 @@
 import 'package:astro_flutter/config/extensions.dart';
 import 'package:flutter/material.dart';
 
+import '../model/local/detail_model.dart';
 import '../screens/detail/detail_screen.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/main_menu/menu_screen.dart';
@@ -16,7 +17,7 @@ class AppRouter {
       case HomeScreen.routeName:
         return HomeScreen.route();
       case DetailScreen.routeName:
-        return DetailScreen.route();
+        return DetailScreen.route(settings.arguments as Detail);
 
       default:
         return _errorRoute();
