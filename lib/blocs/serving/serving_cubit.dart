@@ -11,8 +11,9 @@ class ServingCubit extends Cubit<int> {
 
   /// Subtract 1 from the current state.
   void decrement() {
-    if (state > 1) emit(state - 1);
+    if (state > 1) return emit(state - 1);
   }
 
-  Color get decrementColor => state ==1 ?CustomColors.tertiaryText :CustomColors.secondaryRed;
+  Color get decrementColor =>
+      state <= 1 ? CustomColors.tertiaryText : CustomColors.secondaryRed;
 }
