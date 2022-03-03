@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../config/custom_color.dart';
+import '../../config/custom_color.dart';
 
 class MenuCard extends StatelessWidget {
   final VoidCallback onTap;

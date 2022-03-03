@@ -1,17 +1,75 @@
 import 'dart:math';
-import 'package:astro_flutter/config/custom_color.dart';
-import 'package:astro_flutter/model/drink_model.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 
-import '../config/extensions.dart';
+import '../../blocs/blocs.dart';
+import '../../config/custom_color.dart';
+import '../../config/extensions.dart';
+import '../../model/local/detail_model.dart';
+import '../../model/meal_model.dart';
 
-class DrinkCard extends StatelessWidget {
-  final Drink? drink;
-  final VoidCallback? onTap;
-  const DrinkCard({
+class MealList extends StatelessWidget {
+  const MealList({
     Key? key,
-    this.drink,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MealBloc, MealState>(
+      builder: (context, state) {
+        if (state is MealLoading) {
+          return ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: 3,
+            itemBuilder: (context, i) {
+              return Shimmer.fromColors(
+                highlightColor: Colors.white,
+                baseColor: CustomColors.tertiaryText,
+                period: const Duration(milliseconds: 800),
+                child: const _MealCard(
+                  meal: null,
+                  onTap: null,
+                ),
+              );
+            },
+          );
+        } else if (state is MealLoaded) {
+          return ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: state.meals.length,
+            itemBuilder: (context, i) {
+              final meal = state.meals[i];
+              return _MealCard(
+                meal: meal,
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/detail',
+                    arguments: Detail(meal: meal),
+                  );
+                },
+              );
+            },
+          );
+        } else {
+          return const Center(child: Text('Something went wrong'));
+        }
+      },
+    );
+  }
+}
+
+class _MealCard extends StatelessWidget {
+  final Meal? meal;
+  final VoidCallback? onTap;
+  const _MealCard({
+    Key? key,
+    this.meal,
     this.onTap,
   }) : super(key: key);
 
@@ -30,7 +88,7 @@ class DrinkCard extends StatelessWidget {
             AspectRatio(
               aspectRatio: 16 / 9,
               child: CachedNetworkImage(
-                imageUrl: drink?.strDrinkThumb ?? '',
+                imageUrl: meal?.strMealThumb ?? '',
                 placeholder: (context, url) =>
                     const Center(child: CircularProgressIndicator()),
                 imageBuilder: (context, imageProvider) => Container(
@@ -66,7 +124,7 @@ class DrinkCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    drink?.strDrink ?? '',
+                    meal?.strMeal ?? '',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -77,14 +135,14 @@ class DrinkCard extends StatelessWidget {
                       Icon(
                         Icons.star,
                         size: 24,
-                        color: drink != null
+                        color: meal != null
                             ? CustomColors.primaryRed
                             : Colors.transparent,
                       ),
                       Text(
                         avgRatings.toStringAsFixed(1),
                         style: TextStyle(
-                          color: drink != null
+                          color: meal != null
                               ? CustomColors.primaryRed
                               : Colors.transparent,
                         ),
@@ -94,11 +152,11 @@ class DrinkCard extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 12,
                           color:
-                              drink != null ? Colors.grey : Colors.transparent,
+                              meal != null ? Colors.grey : Colors.transparent,
                         ),
                       ),
                       Text(
-                        drink?.strCategory ?? '',
+                        meal?.strCategory ?? '',
                         style: const TextStyle(
                           fontSize: 12,
                           color: Colors.grey,
@@ -110,13 +168,13 @@ class DrinkCard extends StatelessWidget {
                         ' \u2022 ',
                         style: TextStyle(
                           fontSize: 12,
-                          color: drink != null
+                          color: meal != null
                               ? CustomColors.primaryRed
                               : Colors.transparent,
                         ),
                       ),
                       Text(
-                        drink?.strAlcoholic ?? '',
+                        meal?.strArea ?? '',
                         style: const TextStyle(
                           fontSize: 12,
                           color: Colors.grey,

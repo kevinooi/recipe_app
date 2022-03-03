@@ -1,12 +1,80 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:astro_flutter/model/drink_category_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
 
-class DrinkCategoryCard extends StatelessWidget {
+import '../../blocs/blocs.dart';
+import '../../config/custom_color.dart';
+
+class DrinkCategories extends StatelessWidget {
+  const DrinkCategories({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<DrinkCategoryBloc, DrinkCategoryState>(
+      builder: (context, state) {
+        if (state is DrinkCategoryLoading) {
+          return ListView.separated(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: 5,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            itemBuilder: (context, i) {
+              return Shimmer.fromColors(
+                highlightColor: Colors.white,
+                baseColor: CustomColors.tertiaryText,
+                period: const Duration(milliseconds: 800),
+                child: const _DrinkCategoryCard(
+                  drinkCategory: null,
+                  onTap: null,
+                ),
+              );
+            },
+            separatorBuilder: (context, index) {
+              return const SizedBox(width: 10);
+            },
+          );
+        } else if (state is DrinkCategoryLoaded) {
+          return ListView.separated(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            itemCount: state.drinkCategories.length,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            itemBuilder: (context, i) {
+              final drinkCategory = state.drinkCategories[i];
+              return _DrinkCategoryCard(
+                drinkCategory: drinkCategory,
+                onTap: () {
+                  context.read<DrinkBloc>().add(
+                        LoadDrinks(
+                          strDrink: drinkCategory.strDrink ?? '',
+                        ),
+                      );
+                },
+              );
+            },
+            separatorBuilder: (context, index) {
+              return const SizedBox(width: 10);
+            },
+          );
+        } else {
+          return const Center(child: Text('Something went wrong'));
+        }
+      },
+    );
+  }
+}
+
+class _DrinkCategoryCard extends StatelessWidget {
   final DrinkCategory? drinkCategory;
   final VoidCallback? onTap;
 
-  const DrinkCategoryCard({
+  const _DrinkCategoryCard({
     Key? key,
     this.drinkCategory,
     this.onTap,

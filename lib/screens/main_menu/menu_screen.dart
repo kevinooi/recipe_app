@@ -1,10 +1,9 @@
 import 'package:astro_flutter/blocs/blocs.dart';
-import 'package:astro_flutter/widgets/menu_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../config/custom_color.dart';
-import '../../widgets/search_box.dart';
+import '../../widgets/widgets.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -58,6 +57,7 @@ class MenuScreen extends StatelessWidget {
                 ),
               ),
               MenuCard(
+                key: const Key('food'),
                 onTap: () {
                   context.read<MenuCubit>().selectFood();
                   context.read<CategoryBloc>().add(LoadFoodCategories());
@@ -70,6 +70,7 @@ class MenuScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 120),
                 child: MenuCard(
+                  key: const Key('drink'),
                   onTap: () {
                     context.read<MenuCubit>().selectDrink();
                     context

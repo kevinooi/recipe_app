@@ -1,12 +1,80 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:astro_flutter/model/category_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
 
-class CategoryCard extends StatelessWidget {
+import '../../blocs/blocs.dart';
+import '../../config/custom_color.dart';
+
+class FoodCategories extends StatelessWidget {
+  const FoodCategories({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<CategoryBloc, CategoryState>(
+      builder: (context, state) {
+        if (state is CategoryLoading) {
+          return ListView.separated(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: 5,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            itemBuilder: (context, i) {
+              return Shimmer.fromColors(
+                highlightColor: Colors.white,
+                baseColor: CustomColors.tertiaryText,
+                period: const Duration(milliseconds: 800),
+                child: const _CategoryCard(
+                  category: null,
+                  onTap: null,
+                ),
+              );
+            },
+            separatorBuilder: (context, index) {
+              return const SizedBox(width: 10);
+            },
+          );
+        } else if (state is CategoryLoaded) {
+          return ListView.separated(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            itemCount: state.categories.length,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            itemBuilder: (context, i) {
+              final category = state.categories[i];
+              return _CategoryCard(
+                category: category,
+                onTap: () {
+                  context.read<MealBloc>().add(
+                        LoadMeals(
+                          strCategory: category.strCategory ?? '',
+                        ),
+                      );
+                },
+              );
+            },
+            separatorBuilder: (context, index) {
+              return const SizedBox(width: 10);
+            },
+          );
+        } else {
+          return const Center(child: Text('Something went wrong'));
+        }
+      },
+    );
+  }
+}
+
+class _CategoryCard extends StatelessWidget {
   final Category? category;
   final VoidCallback? onTap;
 
-  const CategoryCard({
+  const _CategoryCard({
     Key? key,
     this.category,
     this.onTap,
