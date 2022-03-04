@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import "package:collection/collection.dart";
 
-import 'local/detail_model.dart';
+import 'local/ingredient_model.dart';
 
 part 'drink_model.g.dart';
 
@@ -171,9 +171,9 @@ class Drink extends Equatable {
         dateModified,
       ];
 
-  List<String> get ingredients {
-    List<String> result = [];
-    result.addAll([
+  List<Ingredient> get ingredientList {
+    List<String> concatStrIngredient = [];
+    concatStrIngredient.addAll([
       strIngredient1 ?? '',
       strIngredient2 ?? '',
       strIngredient3 ?? '',
@@ -190,12 +190,9 @@ class Drink extends Equatable {
       strIngredient14 ?? '',
       strIngredient15 ?? '',
     ]);
-    return result;
-  }
 
-  List<String> get measures {
-    List<String> result = [];
-    result.addAll([
+    List<String> concatStrMeasure = [];
+    concatStrMeasure.addAll([
       strMeasure1 ?? '',
       strMeasure2 ?? '',
       strMeasure3 ?? '',
@@ -212,15 +209,23 @@ class Drink extends Equatable {
       strMeasure14 ?? '',
       strMeasure15 ?? '',
     ]);
-    return result;
-  }
 
-  List<Ingredient> get ingredientList {
-    final result = IterableZip([ingredients, measures])
+    final formatIngredients = [];
+    for (var e in concatStrIngredient) {
+      formatIngredients.add(e.replaceAll("\n", "").trim());
+    }
+
+    final formatMeasurements = [];
+    for (var e in concatStrMeasure) {
+      formatMeasurements.add(e.replaceAll("\n", "").trim());
+    }
+
+    final result = IterableZip([formatIngredients, formatMeasurements])
         .map((item) => Ingredient(ingredient: item[0], measurement: item[1]))
         .toList();
+
     result.removeWhere((e) {
-      return e.ingredient.trim().isEmpty && e.measurement.trim().isEmpty;
+      return e.ingredient.isEmpty && e.measurement.isEmpty;
     });
     return result;
   }
