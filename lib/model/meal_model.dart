@@ -236,7 +236,7 @@ class Meal extends Equatable {
       formatMeasurements.add(e.replaceAll("\n", "").trim());
     }
 
-    final result = IterableZip([concatStrIngredient, concatStrMeasure])
+    final result = IterableZip([formatIngredients, formatMeasurements])
         .map((item) => Ingredient(ingredient: item[0], measurement: item[1]))
         .toList();
 
