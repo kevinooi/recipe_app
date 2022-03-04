@@ -6,12 +6,13 @@ import 'package:astro_flutter/repositories/drinks/base_drink.dart';
 import 'package:http/http.dart' as http;
 
 class DrinkRepository extends BaseDrinkRepository {
+  http.Client client = http.Client();
   DrinkRepository();
 
   @override
   Future<List<Drink>> getDrinksByCategory(String strDrink) async {
     try {
-      final response = await http.get(
+      final response = await client.get(
         Uri.parse(
             'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=$strDrink'),
       );

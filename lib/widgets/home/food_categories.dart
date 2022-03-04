@@ -50,11 +50,9 @@ class FoodCategories extends StatelessWidget {
               return _CategoryCard(
                 category: category,
                 onTap: () {
-                  context.read<MealBloc>().add(
-                        LoadMeals(
-                          strCategory: category.strCategory ?? '',
-                        ),
-                      );
+                  context
+                      .read<MealBloc>()
+                      .add(LoadMeals(strCategory: category.strCategory ?? ''));
                 },
               );
             },

@@ -37,24 +37,22 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => CategoryBloc(
               categoryRepository: context.read<CategoryRepository>(),
-            ),
+            )..add(LoadFoodCategories()),
           ),
           BlocProvider(
             create: (context) => MealBloc(
               mealRepository: context.read<MealRepository>(),
-            )..add(
-                const LoadMeals(),
-              ),
+            )..add(const LoadMeals()),
           ),
           BlocProvider(
             create: (context) => DrinkCategoryBloc(
               categoryRepository: context.read<CategoryRepository>(),
-            ),
+            )..add(const LoadDrinkCategories()),
           ),
           BlocProvider(
             create: (context) => DrinkBloc(
               drinkRepository: context.read<DrinkRepository>(),
-            ),
+            )..add(const LoadDrinks()),
           ),
         ],
         child: MaterialApp(

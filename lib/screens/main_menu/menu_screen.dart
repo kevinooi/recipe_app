@@ -57,11 +57,9 @@ class MenuScreen extends StatelessWidget {
                 ),
               ),
               MenuCard(
-                key: const Key('food'),
+                key: const Key('food-menu'),
                 onTap: () {
                   context.read<MenuCubit>().selectFood();
-                  context.read<CategoryBloc>().add(LoadFoodCategories());
-                  context.read<MealBloc>().add(const LoadMeals());
                   Navigator.pushNamed(context, '/home');
                 },
                 imageUrl: 'https://picsum.photos/id/488/65/65',
@@ -70,13 +68,9 @@ class MenuScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 120),
                 child: MenuCard(
-                  key: const Key('drink'),
+                  key: const Key('drink-menu'),
                   onTap: () {
                     context.read<MenuCubit>().selectDrink();
-                    context
-                        .read<DrinkCategoryBloc>()
-                        .add(const LoadDrinkCategories());
-                    context.read<DrinkBloc>().add(const LoadDrinks());
                     Navigator.pushNamed(context, '/home');
                   },
                   imageUrl: 'https://picsum.photos/id/431/65/65',
