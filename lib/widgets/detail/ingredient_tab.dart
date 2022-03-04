@@ -56,6 +56,7 @@ class IngredientTab extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         _RoundButton(
+                          key: const Key('increment'),
                           onTap: () => context.read<ServingCubit>().increment(),
                           icon: const Icon(
                             Icons.add,
@@ -77,6 +78,7 @@ class IngredientTab extends StatelessWidget {
                         ),
                         const SizedBox(width: 10),
                         _RoundButton(
+                          key: const Key('decrement'),
                           onTap: () => context.read<ServingCubit>().decrement(),
                           icon: const Icon(
                             Icons.remove,
@@ -113,6 +115,7 @@ class IngredientTab extends StatelessWidget {
                               : drink!.ingredientList[i];
 
                       return Row(
+                        key: Key('item-$i-ingredient'),
                         children: [
                           CachedNetworkImage(
                             imageUrl: meal?.strMealThumb ??

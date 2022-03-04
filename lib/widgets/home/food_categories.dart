@@ -48,6 +48,7 @@ class FoodCategories extends StatelessWidget {
             itemBuilder: (context, i) {
               final category = state.categories[i];
               return _CategoryCard(
+                key: Key('food-category-$i'),
                 category: category,
                 onTap: () {
                   context

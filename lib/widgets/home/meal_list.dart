@@ -44,6 +44,7 @@ class MealList extends StatelessWidget {
             itemBuilder: (context, i) {
               final meal = state.meals[i];
               return _MealCard(
+                key: Key('${meal.strCategory?.toLowerCase()}-$i'),
                 meal: meal,
                 onTap: () {
                   Navigator.pushNamed(context, '/meal-detail', arguments: meal);
