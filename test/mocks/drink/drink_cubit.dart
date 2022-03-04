@@ -1,12 +1,11 @@
+import 'package:astro_flutter/model/drink_model.dart';
+import 'package:astro_flutter/repositories/repositories.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../model/drink_model.dart';
-import '../../repositories/drinks/mock_drink_repository.dart';
+part 'mock_drink_state.dart';
 
-part 'cache_drink_state.dart';
-
-class DrinkCubit extends Cubit<CacheDrinkState> {
+class DrinkCubit extends Cubit<MockDrinkState> {
   final MockDrinkRepository? mockDrinkRepository;
   DrinkCubit(this.mockDrinkRepository) : super(DrinkLoading());
 

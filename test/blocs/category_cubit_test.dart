@@ -1,8 +1,9 @@
-import 'package:astro_flutter/blocs/cache_category/category_cubit.dart';
 import 'package:astro_flutter/repositories/repositories.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../mocks/mocks.dart';
 
 void main() {
   group('CategoryCubit test', () {
@@ -19,7 +20,7 @@ void main() {
       expect(categoryCubit.state.runtimeType, CategoryLoading);
     });
 
-    blocTest<CategoryCubit, CacheCategoryState>(
+    blocTest<CategoryCubit, MockCategoryState>(
       'emits [CategoryLoading, CategoryLoaded] states for'
       'successful categories load',
       build: () => categoryCubit,
@@ -30,7 +31,7 @@ void main() {
       ],
     );
 
-    blocTest<CategoryCubit, CacheCategoryState>(
+    blocTest<CategoryCubit, MockCategoryState>(
       'emits [CategoryError] state if contract is null',
       build: () => CategoryCubit(null),
       act: (cubit) => cubit.getCategories(),

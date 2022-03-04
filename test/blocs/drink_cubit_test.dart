@@ -1,8 +1,9 @@
-import 'package:astro_flutter/blocs/cache_drink/drink_cubit.dart';
 import 'package:astro_flutter/repositories/repositories.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../mocks/mocks.dart';
 
 void main() {
   group('DrinkCubit test', () {
@@ -19,7 +20,7 @@ void main() {
       expect(drinkCubit.state.runtimeType, DrinkLoading);
     });
 
-    blocTest<DrinkCubit, CacheDrinkState>(
+    blocTest<DrinkCubit, MockDrinkState>(
       'emits [DrinkLoading, DrinkLoaded] states for'
       'successful drinks load',
       build: () => drinkCubit,
@@ -30,7 +31,7 @@ void main() {
       ],
     );
 
-    blocTest<DrinkCubit, CacheDrinkState>(
+    blocTest<DrinkCubit, MockDrinkState>(
       'emits [DrinkError] state if contract is null',
       build: () => DrinkCubit(null),
       act: (cubit) => cubit.getDrinksByCategory(''),

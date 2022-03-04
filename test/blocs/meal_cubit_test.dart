@@ -1,8 +1,9 @@
-import 'package:astro_flutter/blocs/cache_meal/meal_cubit.dart';
 import 'package:astro_flutter/repositories/repositories.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../mocks/mocks.dart';
 
 void main() {
   group('MealCubit test', () {
@@ -19,7 +20,7 @@ void main() {
       expect(mealCubit.state.runtimeType, MealLoading);
     });
 
-    blocTest<MealCubit, CacheMealState>(
+    blocTest<MealCubit, MockMealState>(
       'emits [MealLoading, MealLoaded] states for'
       'successful meals load',
       build: () => mealCubit,
@@ -30,7 +31,7 @@ void main() {
       ],
     );
 
-    blocTest<MealCubit, CacheMealState>(
+    blocTest<MealCubit, MockMealState>(
       'emits [MealError] state if contract is null',
       build: () => MealCubit(null),
       act: (cubit) => cubit.getMealsByCategory(''),

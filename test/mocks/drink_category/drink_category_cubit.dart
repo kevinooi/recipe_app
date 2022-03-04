@@ -1,12 +1,11 @@
 import 'package:astro_flutter/model/drink_category_model.dart';
+import 'package:astro_flutter/repositories/repositories.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../repositories/repositories.dart';
+part 'mock_drink_category_state.dart';
 
-part 'cache_drink_category_state.dart';
-
-class DrinkCategoryCubit extends Cubit<CacheDrinkCategoryState> {
+class DrinkCategoryCubit extends Cubit<MockDrinkCategoryState> {
   DrinkCategoryCubit(this.mockCategoryRepository)
       : super(DrinkCategoryLoading());
 

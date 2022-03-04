@@ -1,12 +1,11 @@
+import 'package:astro_flutter/model/meal_model.dart';
+import 'package:astro_flutter/repositories/repositories.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../model/meal_model.dart';
-import '../../repositories/meals/mock_meal_repository.dart';
+part 'mock_meal_state.dart';
 
-part 'cache_meal_state.dart';
-
-class MealCubit extends Cubit<CacheMealState> {
+class MealCubit extends Cubit<MockMealState> {
   final MockMealRepository? mockMealRepository;
   MealCubit(this.mockMealRepository) : super(MealLoading());
 

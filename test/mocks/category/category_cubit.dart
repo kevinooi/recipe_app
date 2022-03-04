@@ -1,12 +1,11 @@
+import 'package:astro_flutter/model/category_model.dart';
+import 'package:astro_flutter/repositories/repositories.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../model/category_model.dart';
-import '../../../repositories/repositories.dart';
+part 'mock_category_state.dart';
 
-part 'cache_category_state.dart';
-
-class CategoryCubit extends Cubit<CacheCategoryState> {
+class CategoryCubit extends Cubit<MockCategoryState> {
   CategoryCubit(this.mockCategoryRepository) : super(CategoryLoading());
 
   final MockCategoryRepository? mockCategoryRepository;
