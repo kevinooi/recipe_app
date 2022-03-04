@@ -1,3 +1,4 @@
+import 'package:astro_flutter/blocs/blocs.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -9,8 +10,12 @@ part 'meal_detail_state.dart';
 
 class MealDetailBloc extends Bloc<MealDetailEvent, MealDetailState> {
   final MealRepository _mealRepository;
-  MealDetailBloc({required MealRepository mealRepository})
-      : _mealRepository = mealRepository,
+  final CacheMealCubit _cacheMealCubit;
+  MealDetailBloc({
+    required MealRepository mealRepository,
+    required CacheMealCubit cacheMealCubit,
+  })  : _mealRepository = mealRepository,
+        _cacheMealCubit = cacheMealCubit,
         super(MealDetailLoading()) {
     on<LoadMealDetail>(_onLoadMealDetail);
   }
@@ -19,6 +24,11 @@ class MealDetailBloc extends Bloc<MealDetailEvent, MealDetailState> {
     LoadMealDetail event,
     Emitter<MealDetailState> emit,
   ) async {
+    if (_cacheMealCubit.state?.idMeal == event.id) {
+      return emit(
+        MealDetailLoaded(meal: _cacheMealCubit.state!),
+      );
+    }
     emit(MealDetailLoading());
     try {
       Meal? meal = await _mealRepository.getMealById(event.id);
@@ -26,6 +36,7 @@ class MealDetailBloc extends Bloc<MealDetailEvent, MealDetailState> {
         emit(
           MealDetailLoaded(meal: meal),
         );
+        _cacheMealCubit.saveMealAsCache(meal);
       } else {
         emit(MealDetailError());
       }

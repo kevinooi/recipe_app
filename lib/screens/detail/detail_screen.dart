@@ -21,6 +21,7 @@ class MealDetailScreen extends HookWidget {
           BlocProvider(
               create: (context) => MealDetailBloc(
                     mealRepository: context.read<MealRepository>(),
+                    cacheMealCubit: context.read<CacheMealCubit>(),
                   )..add(
                       LoadMealDetail(id: meal.idMeal ?? ''),
                     )),
@@ -48,7 +49,7 @@ class MealDetailScreen extends HookWidget {
             } else if (state is MealDetailLoaded) {
               return DetailBody(
                 tabController: tabController,
-                meal: meal,
+                meal: state.meal,
               );
             } else {
               return const Center(child: Text('Something went wrong'));
@@ -73,6 +74,7 @@ class DrinkDetailScreen extends HookWidget {
           BlocProvider(
               create: (context) => DrinkDetailBloc(
                     drinkRepository: context.read<DrinkRepository>(),
+                    cacheDrinkCubit: context.read<CacheDrinkCubit>(),
                   )..add(
                       LoadDrinkDetail(id: drink.idDrink ?? ''),
                     )),
@@ -100,7 +102,7 @@ class DrinkDetailScreen extends HookWidget {
             } else if (state is DrinkDetailLoaded) {
               return DetailBody(
                 tabController: tabController,
-                drink: drink,
+                drink: state.drink,
               );
             } else {
               return const Center(child: Text('Something went wrong'));

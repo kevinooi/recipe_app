@@ -1,3 +1,4 @@
+import 'package:astro_flutter/blocs/blocs.dart';
 import 'package:astro_flutter/model/drink_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -9,8 +10,12 @@ part 'drink_detail_state.dart';
 
 class DrinkDetailBloc extends Bloc<DrinkDetailEvent, DrinkDetailState> {
   final DrinkRepository _drinkRepository;
-  DrinkDetailBloc({required DrinkRepository drinkRepository})
-      : _drinkRepository = drinkRepository,
+  final CacheDrinkCubit _cacheDrinkCubit;
+  DrinkDetailBloc({
+    required DrinkRepository drinkRepository,
+    required CacheDrinkCubit cacheDrinkCubit,
+  })  : _drinkRepository = drinkRepository,
+        _cacheDrinkCubit = cacheDrinkCubit,
         super(DrinkDetailLoading()) {
     on<LoadDrinkDetail>(_onLoadDrinkDetail);
   }
@@ -19,6 +24,11 @@ class DrinkDetailBloc extends Bloc<DrinkDetailEvent, DrinkDetailState> {
     LoadDrinkDetail event,
     Emitter<DrinkDetailState> emit,
   ) async {
+    if (_cacheDrinkCubit.state?.idDrink == event.id) {
+      return emit(
+        DrinkDetailLoaded(drink: _cacheDrinkCubit.state!),
+      );
+    }
     emit(DrinkDetailLoading());
     try {
       Drink? drink = await _drinkRepository.getDrinkById(event.id);
@@ -26,6 +36,7 @@ class DrinkDetailBloc extends Bloc<DrinkDetailEvent, DrinkDetailState> {
         emit(
           DrinkDetailLoaded(drink: drink),
         );
+        _cacheDrinkCubit.saveDrinkAsCache(drink);
       } else {
         emit(DrinkDetailError());
       }
