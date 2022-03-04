@@ -8,7 +8,6 @@ import 'package:shimmer/shimmer.dart';
 import '../../blocs/blocs.dart';
 import '../../config/custom_color.dart';
 import '../../config/extensions.dart';
-import '../../model/local/detail_model.dart';
 import '../../model/meal_model.dart';
 
 class MealList extends StatelessWidget {
@@ -47,11 +46,7 @@ class MealList extends StatelessWidget {
               return _MealCard(
                 meal: meal,
                 onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    '/detail',
-                    arguments: Detail(meal: meal),
-                  );
+                  Navigator.pushNamed(context, '/meal-detail', arguments: meal);
                 },
               );
             },

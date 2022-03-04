@@ -4,21 +4,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/blocs.dart';
 import '../../config/custom_color.dart';
-import '../../model/local/detail_model.dart';
+import '../../model/drink_model.dart';
+import '../../model/meal_model.dart';
 
 class IngredientTab extends StatelessWidget {
-  final Detail detail;
+  final Meal? meal;
+  final Drink? drink;
   const IngredientTab({
     Key? key,
-    required this.detail,
+    this.meal,
+    this.drink,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: (detail.meal?.ingredientList.isNotEmpty ??
-              detail.drink?.ingredientList.isNotEmpty ??
+      child: (meal?.ingredientList.isNotEmpty ??
+              drink?.ingredientList.isNotEmpty ??
               false)
           ? Column(
               children: [
@@ -93,8 +96,8 @@ class IngredientTab extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: detail.meal?.ingredientList.length ??
-                        detail.drink?.ingredientList.length ??
+                    itemCount: meal?.ingredientList.length ??
+                        drink?.ingredientList.length ??
                         0,
                     separatorBuilder: (context, i) {
                       return const Divider(
@@ -105,15 +108,15 @@ class IngredientTab extends StatelessWidget {
                     },
                     itemBuilder: (ctx, i) {
                       final ingredient =
-                          (detail.meal?.ingredientList.isNotEmpty ?? false)
-                              ? detail.meal!.ingredientList[i]
-                              : detail.drink!.ingredientList[i];
+                          (meal?.ingredientList.isNotEmpty ?? false)
+                              ? meal!.ingredientList[i]
+                              : drink!.ingredientList[i];
 
                       return Row(
                         children: [
                           CachedNetworkImage(
-                            imageUrl: detail.meal?.strMealThumb ??
-                                detail.drink?.strDrinkThumb ??
+                            imageUrl: meal?.strMealThumb ??
+                                drink?.strDrinkThumb ??
                                 'https://picsum.photos/id/488/20/20',
                             imageBuilder: (context, imageProvider) => Container(
                               padding: const EdgeInsets.all(2),

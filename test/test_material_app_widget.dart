@@ -23,7 +23,10 @@ class TestMaterialAppWidget extends StatelessWidget {
     return <String, WidgetBuilder>{
       MenuScreen.routeName: (context) => _testRoute(MenuScreen.routeName),
       HomeScreen.routeName: (context) => _testRoute(HomeScreen.routeName),
-      DetailScreen.routeName: (context) => _testRoute(DetailScreen.routeName),
+      MealDetailScreen.routeName: (context) =>
+          _testRoute(MealDetailScreen.routeName),
+      DrinkDetailScreen.routeName: (context) =>
+          _testRoute(DrinkDetailScreen.routeName),
     };
   }
 

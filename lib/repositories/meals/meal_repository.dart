@@ -34,4 +34,28 @@ class MealRepository extends BaseMealRepository {
       throw Exception('error fetching meals: $e $stackTrace');
     }
   }
+
+  @override
+  Future<Meal?> getMealById(String idMeal) async {
+    try {
+      final response = await client.get(
+        Uri.parse(
+            'https://www.themealdb.com/api/json/v1/1/lookup.php?i=$idMeal'),
+      );
+      logI('meal response', response);
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final castList = data['meals'] as List<dynamic>?;
+
+        if (castList != null) {
+          return Meal.fromJson(castList.first);
+        }
+      }
+      return null;
+    } catch (e, stackTrace) {
+      logE('Meal', e.toString(), stackTrace);
+      throw Exception('error fetching meal by id: $e $stackTrace');
+    }
+  }
 }

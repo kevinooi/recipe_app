@@ -34,4 +34,28 @@ class DrinkRepository extends BaseDrinkRepository {
       throw Exception('error fetching drinks: $e $stackTrace');
     }
   }
+
+  @override
+  Future<Drink?> getDrinkById(String idDrink) async {
+    try {
+      final response = await client.get(
+        Uri.parse(
+            'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=$idDrink'),
+      );
+      logI('drink response', response);
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final castList = data['drinks'] as List<dynamic>?;
+
+        if (castList != null) {
+          return Drink.fromJson(castList.first);
+        }
+      }
+      return null;
+    } catch (e, stackTrace) {
+      logE('Drink', e.toString(), stackTrace);
+      throw Exception('error fetching drink by id: $e $stackTrace');
+    }
+  }
 }

@@ -9,7 +9,6 @@ import '../../blocs/blocs.dart';
 import '../../config/custom_color.dart';
 import '../../config/extensions.dart';
 import '../../model/drink_model.dart';
-import '../../model/local/detail_model.dart';
 
 class DrinksList extends StatelessWidget {
   const DrinksList({
@@ -47,11 +46,8 @@ class DrinksList extends StatelessWidget {
               return _DrinkCard(
                 drink: drink,
                 onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    '/detail',
-                    arguments: Detail(drink: drink),
-                  );
+                  Navigator.pushNamed(context, '/drink-detail',
+                      arguments: drink);
                 },
               );
             },
