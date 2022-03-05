@@ -60,7 +60,6 @@ class _DrinkCategoriesResponsive extends StatelessWidget {
                   ? Shimmer.fromColors(
                       highlightColor: Colors.white,
                       baseColor: CustomColors.tertiaryText,
-                      period: const Duration(milliseconds: 800),
                       child: _DrinkCategoryCard(
                         key: Key('drink-category-$i'),
                         drinkCategory: drinkCategory,
@@ -106,15 +105,15 @@ class _DrinkCategoriesResponsive extends StatelessWidget {
                   ? Shimmer.fromColors(
                       highlightColor: Colors.white,
                       baseColor: CustomColors.tertiaryText,
-                      period: const Duration(milliseconds: 800),
                       child: _DrinkCategoryCard(
-                        key: Key('drink-category-$i'),
+                        key:
+                            Key('${drinkCategory?.strDrink?.toLowerCase()}-$i'),
                         drinkCategory: drinkCategory,
                         onTap: null,
                       ),
                     )
                   : _DrinkCategoryCard(
-                      key: Key('drink-category-$i'),
+                      key: Key('${drinkCategory.strDrink?.toLowerCase()}-$i'),
                       drinkCategory: drinkCategory,
                       onTap: () {
                         context.read<DrinkBloc>().add(

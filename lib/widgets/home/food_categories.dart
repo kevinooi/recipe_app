@@ -63,10 +63,7 @@ class _FoodCategoriesResponsive extends StatelessWidget {
                       child: _CategoryCard(
                         key: Key('food-category-$i'),
                         category: category,
-                        onTap: () {
-                          context.read<MealBloc>().add(LoadMeals(
-                              strCategory: category?.strCategory ?? ''));
-                        },
+                        onTap: null,
                       ),
                     )
                   : _CategoryCard(
@@ -110,10 +107,7 @@ class _FoodCategoriesResponsive extends StatelessWidget {
                       child: _CategoryCard(
                         key: Key('food-category-$i'),
                         category: category,
-                        onTap: () {
-                          context.read<MealBloc>().add(LoadMeals(
-                              strCategory: category?.strCategory ?? ''));
-                        },
+                        onTap: null,
                       ),
                     )
                   : _CategoryCard(
