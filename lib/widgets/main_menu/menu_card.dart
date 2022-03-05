@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/custom_color.dart';
+import '../../config/responsive.dart';
 
 class MenuCard extends StatelessWidget {
   final VoidCallback onTap;
@@ -23,7 +24,6 @@ class MenuCard extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(
-        top: 30,
         left: 50,
         right: 40,
       ),
@@ -31,7 +31,9 @@ class MenuCard extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           Container(
-            width: screenWidth,
+            width: Responsive.isMobile(context) || Responsive.isTablet(context)
+                ? screenWidth
+                : screenWidth / 2,
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.horizontal(
@@ -90,7 +92,9 @@ class MenuCard extends StatelessWidget {
             top: 13,
             left: -30,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(80),
+              borderRadius: BorderRadius.circular(
+                title == 'Beverages' ? 16 : 80,
+              ),
               child: CachedNetworkImage(
                 imageUrl: imageUrl,
                 placeholder: (context, url) =>

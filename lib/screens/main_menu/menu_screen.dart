@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../config/custom_color.dart';
+import '../../config/responsive.dart';
 import '../../widgets/widgets.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -56,25 +57,38 @@ class MenuScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              MenuCard(
-                key: const Key('food-menu'),
-                onTap: () {
-                  context.read<MenuCubit>().selectFood();
-                  Navigator.pushNamed(context, '/home');
-                },
-                imageUrl: 'https://picsum.photos/id/488/65/65',
-                title: 'Food',
-              ),
               Padding(
-                padding: const EdgeInsets.only(top: 120),
-                child: MenuCard(
-                  key: const Key('drink-menu'),
-                  onTap: () {
-                    context.read<MenuCubit>().selectDrink();
-                    Navigator.pushNamed(context, '/home');
-                  },
-                  imageUrl: 'https://picsum.photos/id/431/65/65',
-                  title: 'Beverages',
+                padding: EdgeInsets.symmetric(
+                  horizontal: Responsive.isMobile(context) ||
+                          Responsive.isTablet(context)
+                      ? 0
+                      : Responsive.isDesktop(context)
+                          ? 40
+                          : 80,
+                ),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    MenuCard(
+                      key: const Key('food-menu'),
+                      onTap: () {
+                        context.read<MenuCubit>().selectFood();
+                        Navigator.pushNamed(context, '/home');
+                      },
+                      imageUrl: 'https://picsum.photos/id/488/65/65',
+                      title: 'Food',
+                    ),
+                    const SizedBox(height: 20),
+                    MenuCard(
+                      key: const Key('drink-menu'),
+                      onTap: () {
+                        context.read<MenuCubit>().selectDrink();
+                        Navigator.pushNamed(context, '/home');
+                      },
+                      imageUrl: 'https://picsum.photos/id/431/65/65',
+                      title: 'Beverages',
+                    ),
+                  ],
                 ),
               ),
             ],

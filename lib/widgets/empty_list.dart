@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../config/custom_color.dart';
-
 class EmptyList extends StatelessWidget {
   const EmptyList({
     Key? key,
