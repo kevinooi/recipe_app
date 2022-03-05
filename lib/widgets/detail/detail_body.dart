@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../config/custom_color.dart';
+import '../../config/responsive.dart';
 import '../../model/drink_model.dart';
 import '../../model/meal_model.dart';
 import 'article_markdown.dart';
@@ -25,7 +26,13 @@ class DetailBody extends StatelessWidget {
         return [
           SliverAppBar(
             backgroundColor: Colors.transparent,
-            collapsedHeight: 300,
+            collapsedHeight: Responsive.isWideDesktop(context)
+                ? 700
+                : Responsive.isDesktop(context)
+                    ? 600
+                    : Responsive.isTablet(context)
+                        ? 400
+                        : 300,
             // expandedHeight: 200,
             flexibleSpace: FlexibleSpaceBar(
               titlePadding: const EdgeInsets.only(left: 20, bottom: 80),
