@@ -187,8 +187,8 @@ class _IngredientTile extends StatelessWidget {
               'https://picsum.photos/id/488/20/20',
           placeholder: (context, url) {
             return const SizedBox(
-              height: 80,
-              width: 80,
+              height: 40,
+              width: 40,
               child: Center(
                 child: CircularProgressIndicator(),
               ),
