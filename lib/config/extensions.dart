@@ -1,14 +1,13 @@
 import 'dart:math';
 
 import 'package:logger/logger.dart';
-import 'dart:io' as io;
 
 double doubleInRange(num start, num end) =>
     Random().nextDouble() * (end - start) + start;
 
 Logger _logger = Logger(
   printer: PrettyPrinter(
-    colors: io.stdout.supportsAnsiEscapes ? true : false,
+    colors: true,
     printEmojis: true,
     printTime: true,
   ),

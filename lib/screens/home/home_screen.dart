@@ -86,12 +86,11 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
-              height: 140,
-              child:
-                  foodMenu ? const FoodCategories() : const DrinkCategories(),
-            ),
+            // Category
+            foodMenu ? const FoodCategories() : const DrinkCategories(),
+
             const SizedBox(height: 30),
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
@@ -100,7 +99,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            foodMenu ? const MealList() : const DrinksList(),
+            foodMenu ? const MealList() : const DrinkList(),
           ],
         ),
       ),

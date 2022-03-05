@@ -3,15 +3,15 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../blocs/blocs.dart';
 import '../../config/custom_color.dart';
 import '../../config/extensions.dart';
+import '../../config/responsive.dart';
 import '../../model/drink_model.dart';
 
-class DrinksList extends StatelessWidget {
-  const DrinksList({
+class DrinkList extends StatelessWidget {
+  const DrinkList({
     Key? key,
   }) : super(key: key);
 
@@ -20,30 +20,61 @@ class DrinksList extends StatelessWidget {
     return BlocBuilder<DrinkBloc, DrinkState>(
       builder: (context, state) {
         if (state is DrinkLoading) {
-          return ListView.builder(
+          return const _DrinksResponsive(drinks: null);
+        } else if (state is DrinkLoaded) {
+          return _DrinksResponsive(drinks: state.drinks);
+        } else {
+          return const Center(child: Text('Something went wrong'));
+        }
+      },
+    );
+  }
+}
+
+class _DrinksResponsive extends StatelessWidget {
+  final List<Drink>? drinks;
+  const _DrinksResponsive({
+    Key? key,
+    required this.drinks,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Responsive.isMobile(context)
+        ? ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: 3,
+            itemCount: drinks?.length ?? 4,
             itemBuilder: (context, i) {
-              return Shimmer.fromColors(
-                highlightColor: Colors.white,
-                baseColor: CustomColors.tertiaryText,
-                period: const Duration(milliseconds: 800),
-                child: const _DrinkCard(
-                  drink: null,
-                  onTap: null,
-                ),
+              final drink = drinks?[i];
+              return _DrinkCard(
+                key: Key('${drink?.strDrink?.toLowerCase()}-$i'),
+                drink: drink,
+                onTap: () {
+                  Navigator.pushNamed(context, '/drink-detail',
+                      arguments: drink);
+                },
               );
             },
-          );
-        } else if (state is DrinkLoaded) {
-          return ListView.builder(
+          )
+        : GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: state.drinks.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: Responsive.isWideDesktop(context)
+                  ? 4
+                  : Responsive.isDesktop(context)
+                      ? 3
+                      : 2,
+              childAspectRatio: 1,
+              mainAxisSpacing: 20,
+              crossAxisSpacing: 20,
+            ),
+            itemCount: drinks?.length ?? 8,
             itemBuilder: (context, i) {
-              final drink = state.drinks[i];
+              final drink = drinks?[i];
               return _DrinkCard(
+                key: Key('${drink?.strDrink?.toLowerCase()}-$i'),
                 drink: drink,
                 onTap: () {
                   Navigator.pushNamed(context, '/drink-detail',
@@ -52,11 +83,6 @@ class DrinksList extends StatelessWidget {
               );
             },
           );
-        } else {
-          return const Center(child: Text('Something went wrong'));
-        }
-      },
-    );
   }
 }
 
@@ -79,7 +105,10 @@ class _DrinkCard extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment:
+              Responsive.isMobile(context) || Responsive.isTablet(context)
+                  ? CrossAxisAlignment.start
+                  : CrossAxisAlignment.center,
           children: <Widget>[
             AspectRatio(
               aspectRatio: 16 / 9,
@@ -113,11 +142,20 @@ class _DrinkCard extends StatelessWidget {
                 },
               ),
             ),
-            const SizedBox(height: 10),
+            Responsive.isMobile(context)
+                ? const SizedBox(height: 10)
+                : Responsive.isTablet(context)
+                    ? const SizedBox(height: 20)
+                    : Responsive.isDesktop(context)
+                        ? const SizedBox(height: 30)
+                        : const SizedBox(height: 50),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment:
+                    Responsive.isMobile(context) || Responsive.isTablet(context)
+                        ? CrossAxisAlignment.start
+                        : CrossAxisAlignment.center,
                 children: [
                   Text(
                     drink?.strDrink ?? '',
@@ -126,56 +164,92 @@ class _DrinkCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  SizedBox(
+                    height: Responsive.isWideDesktop(context)
+                        ? 20
+                        : Responsive.isDesktop(context)
+                            ? 10
+                            : 5,
+                  ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Icon(
-                        Icons.star,
-                        size: 24,
-                        color: drink != null
-                            ? CustomColors.primaryRed
-                            : Colors.transparent,
-                      ),
-                      Text(
-                        avgRatings.toStringAsFixed(1),
-                        style: TextStyle(
-                          color: drink != null
-                              ? CustomColors.primaryRed
-                              : Colors.transparent,
+                      Flexible(
+                        flex: Responsive.isMobile(context) ||
+                                Responsive.isTablet(context)
+                            ? 0
+                            : 1,
+                        child: Row(
+                          mainAxisAlignment: Responsive.isMobile(context) ||
+                                  Responsive.isTablet(context)
+                              ? MainAxisAlignment.start
+                              : MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.star,
+                              size: 24,
+                              color: drink != null
+                                  ? CustomColors.primaryRed
+                                  : Colors.transparent,
+                            ),
+                            Text(
+                              avgRatings.toStringAsFixed(1),
+                              style: TextStyle(
+                                color: drink != null
+                                    ? CustomColors.primaryRed
+                                    : Colors.transparent,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Text(
-                        ' ($totalRatings ratings) ',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color:
-                              drink != null ? Colors.grey : Colors.transparent,
+                      SizedBox(
+                          width: Responsive.isWideDesktop(context) ? 20 : 10),
+                      Flexible(
+                        flex: 2,
+                        child: Text.rich(
+                          TextSpan(
+                            children: [
+                              TextSpan(
+                                text: '($totalRatings ratings) ',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: drink != null
+                                      ? Colors.grey
+                                      : Colors.transparent,
+                                ),
+                              ),
+                              TextSpan(
+                                text: drink?.strCategory ?? '',
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              TextSpan(
+                                text: ' \u2022 ',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: drink != null
+                                      ? CustomColors.primaryRed
+                                      : Colors.transparent,
+                                ),
+                              ),
+                              TextSpan(
+                                text: drink?.strAlcoholic ?? '',
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                ),
+                              )
+                            ],
+                          ),
+                          textAlign: TextAlign.start,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
                         ),
                       ),
-                      Text(
-                        drink?.strCategory ?? '',
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                      Text(
-                        ' \u2022 ',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: drink != null
-                              ? CustomColors.primaryRed
-                              : Colors.transparent,
-                        ),
-                      ),
-                      Text(
-                        drink?.strAlcoholic ?? '',
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey,
-                        ),
-                      )
                     ],
                   ),
                 ],

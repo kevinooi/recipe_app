@@ -21,7 +21,6 @@ class DetailBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NestedScrollView(
-      physics: const NeverScrollableScrollPhysics(),
       headerSliverBuilder: (context, innerBoxIsScrolled) {
         return [
           SliverAppBar(

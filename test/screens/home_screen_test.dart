@@ -49,13 +49,9 @@ void main() {
       // Verify that home screen is showing food category list but not drink category list
       expect(find.byType(FoodCategories), findsOneWidget);
       expect(find.byType(DrinkCategories), findsNothing);
-      // Verify that home screen is showing meal list but not drink list
-      expect(find.byType(MealList), findsOneWidget);
-      expect(find.byType(DrinksList), findsNothing);
     });
 
-    testWidgets('Drink category and drink list test',
-        (WidgetTester tester) async {
+    testWidgets('Drink category test', (WidgetTester tester) async {
       await createWidget(
         tester: tester,
         home: const HomeScreen(),
@@ -65,16 +61,16 @@ void main() {
         menuCubit: menuCubit,
         navObserver: navObserver,
       );
+
+      final drinkCategories = find.byType(DrinkCategories);
+      final foodCategories = find.byType(FoodCategories);
       // select drink menu
       menuCubit.selectDrink();
       await tester.pump();
 
       // Verify that home screen is showing drink category list but not food category list
-      expect(find.byType(FoodCategories), findsNothing);
-      expect(find.byType(DrinkCategories), findsOneWidget);
-      // Verify that home screen is showing drink list but not meal list
-      expect(find.byType(MealList), findsNothing);
-      expect(find.byType(DrinksList), findsOneWidget);
+      expect(foodCategories, findsNothing);
+      expect(drinkCategories, findsOneWidget);
     });
 
     tearDown(() {

@@ -6,6 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../blocs/blocs.dart';
 import '../../config/custom_color.dart';
+import '../../config/responsive.dart';
 
 class FoodCategories extends StatelessWidget {
   const FoodCategories({
@@ -14,58 +15,117 @@ class FoodCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CategoryBloc, CategoryState>(
-      builder: (context, state) {
-        if (state is CategoryLoading) {
-          return ListView.separated(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: 5,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            itemBuilder: (context, i) {
-              return Shimmer.fromColors(
-                highlightColor: Colors.white,
-                baseColor: CustomColors.tertiaryText,
-                period: const Duration(milliseconds: 800),
-                child: const _CategoryCard(
-                  category: null,
-                  onTap: null,
-                ),
-              );
-            },
-            separatorBuilder: (context, index) {
-              return const SizedBox(width: 10);
-            },
-          );
-        } else if (state is CategoryLoaded) {
-          return ListView.separated(
+    return AspectRatio(
+      aspectRatio: Responsive.isMobile(context)
+          ? 3
+          : Responsive.isTablet(context)
+              ? 1.2
+              : Responsive.isDesktop(context)
+                  ? 1.5
+                  : 2.5,
+      child: BlocBuilder<CategoryBloc, CategoryState>(
+        builder: (context, state) {
+          if (state is CategoryLoading) {
+            return const _FoodCategoriesResponsive(categories: null);
+          } else if (state is CategoryLoaded) {
+            return _FoodCategoriesResponsive(categories: state.categories);
+          } else {
+            return const Center(child: Text('Something went wrong'));
+          }
+        },
+      ),
+    );
+  }
+}
+
+class _FoodCategoriesResponsive extends StatelessWidget {
+  final List<Category>? categories;
+  const _FoodCategoriesResponsive({Key? key, required this.categories})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Responsive.isMobile(context)
+        ? ListView.separated(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
-            itemCount: state.categories.length,
+            itemCount: categories?.length ?? 8,
             padding: const EdgeInsets.symmetric(horizontal: 20),
             itemBuilder: (context, i) {
-              final category = state.categories[i];
-              return _CategoryCard(
-                key: Key('food-category-$i'),
-                category: category,
-                onTap: () {
-                  context
-                      .read<MealBloc>()
-                      .add(LoadMeals(strCategory: category.strCategory ?? ''));
-                },
-              );
+              final category = categories?[i];
+
+              return category == null
+                  ? Shimmer.fromColors(
+                      highlightColor: Colors.white,
+                      baseColor: CustomColors.tertiaryText,
+                      period: const Duration(milliseconds: 800),
+                      child: _CategoryCard(
+                        key: Key('food-category-$i'),
+                        category: category,
+                        onTap: () {
+                          context.read<MealBloc>().add(LoadMeals(
+                              strCategory: category?.strCategory ?? ''));
+                        },
+                      ),
+                    )
+                  : _CategoryCard(
+                      key: Key('food-category-$i'),
+                      category: category,
+                      onTap: () {
+                        context.read<MealBloc>().add(
+                            LoadMeals(strCategory: category.strCategory ?? ''));
+                      },
+                    );
             },
             separatorBuilder: (context, index) {
               return const SizedBox(width: 10);
             },
+          )
+        : GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: Responsive.isWideDesktop(context) ||
+                      Responsive.isDesktop(context)
+                  ? 4
+                  : 3,
+              childAspectRatio: Responsive.isTablet(context)
+                  ? 1.7 //1.93
+                  : Responsive.isDesktop(context)
+                      ? 1.55 //1.7
+                      : 2.8, //3
+              mainAxisSpacing: 20,
+              crossAxisSpacing: 20,
+            ),
+            itemCount: categories?.length ?? 12,
+            itemBuilder: (context, i) {
+              final category = categories?[i];
+
+              return category == null
+                  ? Shimmer.fromColors(
+                      highlightColor: Colors.white,
+                      baseColor: CustomColors.tertiaryText,
+                      period: const Duration(milliseconds: 800),
+                      child: _CategoryCard(
+                        key: Key('food-category-$i'),
+                        category: category,
+                        onTap: () {
+                          context.read<MealBloc>().add(LoadMeals(
+                              strCategory: category?.strCategory ?? ''));
+                        },
+                      ),
+                    )
+                  : _CategoryCard(
+                      key: Key('food-category-$i'),
+                      category: category,
+                      onTap: () {
+                        context.read<MealBloc>().add(
+                            LoadMeals(strCategory: category.strCategory ?? ''));
+                      },
+                    );
+            },
           );
-        } else {
-          return const Center(child: Text('Something went wrong'));
-        }
-      },
-    );
   }
 }
 
@@ -94,6 +154,7 @@ class _CategoryCard extends StatelessWidget {
             bottom: 5.0,
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CachedNetworkImage(
                 imageUrl: category?.strCategoryThumb ?? '',
@@ -137,6 +198,9 @@ class _CategoryCard extends StatelessWidget {
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
