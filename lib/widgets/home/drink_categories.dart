@@ -17,7 +17,7 @@ class DrinkCategories extends StatelessWidget {
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: Responsive.isMobile(context)
-          ? 3
+          ? 2.8
           : Responsive.isTablet(context)
               ? 1.2
               : Responsive.isDesktop(context)
