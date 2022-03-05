@@ -185,6 +185,15 @@ class _IngredientTile extends StatelessWidget {
           imageUrl: meal?.strMealThumb ??
               drink?.strDrinkThumb ??
               'https://picsum.photos/id/488/20/20',
+          placeholder: (context, url) {
+            return const SizedBox(
+              height: 80,
+              width: 80,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          },
           imageBuilder: (context, imageProvider) => Container(
             padding: const EdgeInsets.all(2),
             height: 40,
@@ -204,16 +213,16 @@ class _IngredientTile extends StatelessWidget {
             return Container(
               height: 40,
               width: 40,
-              padding: const EdgeInsets.all(5),
               decoration: BoxDecoration(
                 color: Colors.grey.withOpacity(0.5),
                 borderRadius: const BorderRadius.all(
                   Radius.circular(12),
                 ),
               ),
-              child: Icon(
+              child: const Icon(
                 Icons.error,
-                color: url.isEmpty ? Colors.transparent : Colors.white,
+                color: Colors.white,
+                size: 18,
               ),
             );
           },

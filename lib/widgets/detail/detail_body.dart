@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/custom_color.dart';
@@ -52,11 +53,35 @@ class DetailBody extends StatelessWidget {
                 children: [
                   // Background
                   Positioned.fill(
-                    child: Image.network(
-                      meal?.strMealThumb ??
+                    child: CachedNetworkImage(
+                      imageUrl: meal?.strMealThumb ??
                           drink?.strDrinkThumb ??
                           'https://picsum.photos/id/1000/200',
+                      placeholder: (context, url) {
+                        return const SizedBox(
+                          height: 80,
+                          width: 80,
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      },
                       fit: BoxFit.cover,
+                      errorWidget: (context, url, error) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(0.5),
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(12),
+                            ),
+                          ),
+                          child: const Icon(
+                            Icons.error,
+                            color: Colors.white,
+                            size: 40,
+                          ),
+                        );
+                      },
                     ),
                   ),
                   // Border Radius
