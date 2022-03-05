@@ -7,3 +7,4 @@ export 'main_menu/menu_card.dart';
 export 'detail/article_markdown.dart';
 export 'detail/ingredient_tab.dart';
 export 'detail/detail_body.dart';
+export 'empty_list.dart';

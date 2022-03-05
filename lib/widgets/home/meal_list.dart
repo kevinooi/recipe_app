@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:astro_flutter/widgets/widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +23,12 @@ class MealList extends StatelessWidget {
         if (state is MealLoading) {
           return const _MealsResponsive(meals: null);
         } else if (state is MealLoaded) {
+          if (state.meals.isEmpty) {
+            return const EmptyList(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+            );
+          }
           return _MealsResponsive(meals: state.meals);
         } else {
           return const Center(child: Text('Something went wrong'));
