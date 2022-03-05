@@ -152,6 +152,13 @@ class _CategoryCard extends StatelessWidget {
             children: [
               CachedNetworkImage(
                 imageUrl: category?.strCategoryThumb ?? '',
+                placeholder: (context, url) => const SizedBox(
+                  height: 80,
+                  width: 80,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
                 imageBuilder: (context, imageProvider) => Container(
                   padding: const EdgeInsets.all(5),
                   height: 80,

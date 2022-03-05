@@ -156,6 +156,15 @@ class _DrinkCategoryCard extends StatelessWidget {
             children: [
               CachedNetworkImage(
                 imageUrl: drinkCategory?.strDrinkThumb ?? '',
+                placeholder: (context, url) {
+                  return const SizedBox(
+                    height: 80,
+                    width: 80,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                },
                 imageBuilder: (context, imageProvider) => Container(
                   padding: const EdgeInsets.all(5),
                   height: 80,
