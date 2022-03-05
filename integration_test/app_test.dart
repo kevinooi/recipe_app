@@ -20,6 +20,10 @@ void main() {
       await tester.pumpWidget(const MyApp());
 
       final foodMenu = find.byKey(const Key('food-menu'));
+      // tap serving counter increment and decrement
+      final increment = find.byKey(const Key('increment'));
+      final decrement = find.byKey(const Key('decrement'));
+      final tabBarView = find.byType(TabBarView);
 
       await tester.tap(foodMenu);
       await tester.pumpAndSettle();
@@ -32,11 +36,12 @@ void main() {
 
       // tap on first food category
       await tester.tap(find.byKey(const Key('food-category-0')));
-      await tester.pumpAndSettle(const Duration(milliseconds: 500));
+      await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
+      Future.delayed(const Duration(seconds: 2), () {});
       final mealCard = find.byKey(const Key('beef-0'));
       // Verify that meal list first meal is beef category
-      Future.delayed(const Duration(seconds: 1));
+
       expect(mealCard, findsOneWidget);
 
       // tap on the first meal card
@@ -47,17 +52,10 @@ void main() {
       // Verify that on tap meal card navigate to meal detail screen
       expect(detail, findsOneWidget);
 
-      final tabBarView = find.byType(TabBarView);
-      await tester.pump();
-
       // Verify that tab bar is found
       expect(tabBarView, findsOneWidget);
       // Verify that is on the first tab
       expect(find.byType(IngredientTab), findsOneWidget);
-
-      // tap serving counter increment and decrement
-      final increment = find.byKey(const Key('increment'));
-      final decrement = find.byKey(const Key('decrement'));
 
       // initial counter state is 1
       expect(find.text('1 Servings'), findsOneWidget);
@@ -98,15 +96,15 @@ void main() {
       expect(find.text('1'), findsWidgets);
 
       // Swipe the tab bar view
-      await tester.timedDrag(
-          tabBarView, const Offset(-400, 0), const Duration(milliseconds: 500));
-      await tester.pumpAndSettle();
+      await tester.timedDrag(tabBarView, const Offset(-400, 0),
+          const Duration(milliseconds: 4000));
+      await tester.pumpAndSettle(const Duration(seconds: 1));
 
       // Verify that second tab showing steps article markdown
       expect(find.byType(ArticleMarkdown), findsOneWidget);
 
-      await tester.timedDrag(
-          tabBarView, const Offset(-400, 0), const Duration(milliseconds: 500));
+      await tester.timedDrag(tabBarView, const Offset(-400, 0),
+          const Duration(milliseconds: 4000));
       await tester.pumpAndSettle();
 
       // Verify that third tab showing Coming Soon
@@ -127,6 +125,8 @@ void main() {
       await tester.pumpWidget(const MyApp());
 
       final drinkMenu = find.byKey(const Key('drink-menu'));
+      final detail = find.byType(DrinkDetailScreen);
+      final tabBarView = find.byType(TabBarView);
 
       await tester.tap(drinkMenu);
       await tester.pumpAndSettle();
@@ -139,23 +139,20 @@ void main() {
 
       // tap on second drink category
       await tester.tap(find.byKey(const Key('drink-category-1')));
-      await tester.pumpAndSettle(const Duration(milliseconds: 500));
+      await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
+      Future.delayed(const Duration(seconds: 2));
       final drinkCard = find.byKey(const Key('belgian blue-0'));
       // Verify that drink list first drink is belgian blue
-      Future.delayed(const Duration(seconds: 1));
+
       expect(drinkCard, findsOneWidget);
 
       // tap on the first drink card
       await tester.tap(drinkCard);
       await tester.pumpAndSettle();
 
-      final detail = find.byType(DrinkDetailScreen);
       // Verify that on tap drink card navigate to drink detail screen
       expect(detail, findsOneWidget);
-
-      final tabBarView = find.byType(TabBarView);
-      await tester.pump();
 
       // Verify that tab bar is found
       expect(tabBarView, findsOneWidget);
@@ -205,15 +202,15 @@ void main() {
       expect(find.text('1'), findsWidgets);
 
       // Swipe the tab bar view
-      await tester.timedDrag(
-          tabBarView, const Offset(-400, 0), const Duration(milliseconds: 500));
+      await tester.timedDrag(tabBarView, const Offset(-400, 0),
+          const Duration(milliseconds: 4000));
       await tester.pumpAndSettle();
 
       // Verify that second tab showing steps article markdown
       expect(find.byType(ArticleMarkdown), findsOneWidget);
 
-      await tester.timedDrag(
-          tabBarView, const Offset(-400, 0), const Duration(milliseconds: 500));
+      await tester.timedDrag(tabBarView, const Offset(-400, 0),
+          const Duration(milliseconds: 4000));
       await tester.pumpAndSettle();
 
       // Verify that third tab showing Coming Soon
