@@ -22,4 +22,8 @@ class MockDrinkRepository extends BaseDrinkRepository {
   @override
   Future<List<Drink>> getDrinksByCategory(String strDrink) async =>
       Future.delayed(const Duration(seconds: 2), () => [...mockDrinks]);
+
+  @override
+  Future<Drink?> getDrinkById(String idDrink) async =>
+      Future.delayed(const Duration(seconds: 2), () => mockDrinks.first);
 }

@@ -22,4 +22,8 @@ class MockMealRepository extends BaseMealRepository {
   @override
   Future<List<Meal>> getMealsByCategory(String strCategory) async =>
       Future.delayed(const Duration(seconds: 2), () => [...mockMeals]);
+
+  @override
+  Future<Meal?> getMealById(String idMeal) async =>
+      Future.delayed(const Duration(seconds: 2), () => mockMeals.first);
 }
