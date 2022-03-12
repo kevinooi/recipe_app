@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
+import '../../core/custom_color.dart';
+import '../../core/responsive.dart';
 import '../../model/category_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../blocs/blocs.dart';
-import '../../config/custom_color.dart';
-import '../../config/responsive.dart';
 
 class FoodCategories extends StatelessWidget {
   const FoodCategories({

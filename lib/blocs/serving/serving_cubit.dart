@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
-import '../../config/custom_color.dart';
+import '../../core/custom_color.dart';
 
 class ServingCubit extends Cubit<int> {
   ServingCubit() : super(1);

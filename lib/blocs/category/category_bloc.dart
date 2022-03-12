@@ -1,7 +1,7 @@
-import '../../model/category_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../model/category_model.dart';
 import '../../repositories/repositories.dart';
 
 part 'category_event.dart';

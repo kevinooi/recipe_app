@@ -1,8 +1,9 @@
-import 'extensions.dart';
+import 'package:flutter/material.dart';
+
 import '../model/drink_model.dart';
 import '../model/meal_model.dart';
 import '../screens/screens.dart';
-import 'package:flutter/material.dart';
+import 'extensions.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {

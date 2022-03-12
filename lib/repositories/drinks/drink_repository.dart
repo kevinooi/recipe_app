@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../../config/extensions.dart';
+import '../../core/extensions.dart';
 import '../../model/drink_model.dart';
 import 'base_drink.dart';
 import 'package:http/http.dart' as http;

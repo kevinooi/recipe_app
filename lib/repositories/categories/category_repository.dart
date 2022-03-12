@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import '../../config/extensions.dart';
 import 'package:http/http.dart' as http;
 
+import '../../core/extensions.dart';
 import '../../model/category_model.dart';
 import 'base_category.dart';
 import '../../model/drink_category_model.dart';

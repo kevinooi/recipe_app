@@ -1,8 +1,8 @@
-import '../../repositories/repositories.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../model/drink_category_model.dart';
+import '../../repositories/repositories.dart';
 
 part 'drink_category_event.dart';
 part 'drink_category_state.dart';

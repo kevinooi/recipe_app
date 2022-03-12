@@ -1,9 +1,9 @@
-import '../blocs.dart';
-import '../../model/drink_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../model/drink_model.dart';
 import '../../repositories/repositories.dart';
+import '../blocs.dart';
 
 part 'drink_detail_event.dart';
 part 'drink_detail_state.dart';

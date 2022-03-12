@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/blocs.dart';
-import '../../config/custom_color.dart';
-import '../../config/responsive.dart';
+import '../../core/custom_color.dart';
+import '../../core/responsive.dart';
 import '../../model/drink_model.dart';
 import '../../model/meal_model.dart';
 

@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../config/custom_color.dart';
-import '../../config/responsive.dart';
+import '../../core/custom_color.dart';
+import '../../core/responsive.dart';
 import '../../model/drink_model.dart';
 import '../../model/meal_model.dart';
 import 'article_markdown.dart';

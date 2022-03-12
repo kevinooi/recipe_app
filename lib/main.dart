@@ -1,9 +1,9 @@
-import 'config/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'blocs/blocs.dart';
-import 'config/app_router.dart';
+import 'core/app_router.dart';
+import 'core/theme.dart';
 import 'repositories/categories/category_repository.dart';
 import 'repositories/drinks/drink_repository.dart';
 import 'repositories/meals/meal_repository.dart';

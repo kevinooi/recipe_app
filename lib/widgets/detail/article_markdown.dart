@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-import '../../config/custom_color.dart';
+import '../../core/custom_color.dart';
 
 class ArticleMarkdown extends StatelessWidget {
   final String? markdownSource;
