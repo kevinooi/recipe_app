@@ -6,13 +6,12 @@ import 'package:astro_flutter/repositories/meals/base_meal.dart';
 import 'package:http/http.dart' as http;
 
 class MealRepository extends BaseMealRepository {
-  http.Client client = http.Client();
   MealRepository();
 
   @override
   Future<List<Meal>> getMealsByCategory(String strCategory) async {
     try {
-      final response = await client.get(
+      final response = await http.get(
         Uri.parse(
             'https://www.themealdb.com/api/json/v1/1/search.php?s=$strCategory'),
       );
@@ -38,7 +37,7 @@ class MealRepository extends BaseMealRepository {
   @override
   Future<Meal?> getMealById(String idMeal) async {
     try {
-      final response = await client.get(
+      final response = await http.get(
         Uri.parse(
             'https://www.themealdb.com/api/json/v1/1/lookup.php?i=$idMeal'),
       );
