@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:astro_flutter/config/extensions.dart';
-import 'package:astro_flutter/model/drink_model.dart';
-import 'package:astro_flutter/repositories/drinks/base_drink.dart';
+import '../../config/extensions.dart';
+import '../../model/drink_model.dart';
+import 'base_drink.dart';
 import 'package:http/http.dart' as http;
 
 class DrinkRepository extends BaseDrinkRepository {

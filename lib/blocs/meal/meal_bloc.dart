@@ -1,7 +1,7 @@
-import 'package:astro_flutter/model/meal_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../model/meal_model.dart';
 import '../../repositories/repositories.dart';
 
 part 'meal_event.dart';

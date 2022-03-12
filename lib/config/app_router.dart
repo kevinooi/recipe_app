@@ -1,7 +1,7 @@
-import 'package:astro_flutter/config/extensions.dart';
-import 'package:astro_flutter/model/drink_model.dart';
-import 'package:astro_flutter/model/meal_model.dart';
-import 'package:astro_flutter/screens/screens.dart';
+import 'extensions.dart';
+import '../model/drink_model.dart';
+import '../model/meal_model.dart';
+import '../screens/screens.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {

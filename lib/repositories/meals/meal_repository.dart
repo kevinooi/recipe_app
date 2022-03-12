@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:astro_flutter/config/extensions.dart';
-import 'package:astro_flutter/model/meal_model.dart';
-import 'package:astro_flutter/repositories/meals/base_meal.dart';
+import '../../config/extensions.dart';
+import '../../model/meal_model.dart';
+import 'base_meal.dart';
 import 'package:http/http.dart' as http;
 
 class MealRepository extends BaseMealRepository {

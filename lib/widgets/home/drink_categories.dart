@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:astro_flutter/model/drink_category_model.dart';
+import '../../model/drink_category_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../blocs/blocs.dart';

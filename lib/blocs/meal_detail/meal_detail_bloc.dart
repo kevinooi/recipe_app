@@ -1,4 +1,4 @@
-import 'package:astro_flutter/blocs/blocs.dart';
+import '../blocs.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 

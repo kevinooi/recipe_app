@@ -1,11 +1,10 @@
 import 'dart:convert';
 
-import 'package:astro_flutter/config/extensions.dart';
+import '../../config/extensions.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:astro_flutter/model/category_model.dart';
-import 'package:astro_flutter/repositories/categories/base_category.dart';
-
+import '../../model/category_model.dart';
+import 'base_category.dart';
 import '../../model/drink_category_model.dart';
 
 class CategoryRepository extends BaseCategoryRepository {

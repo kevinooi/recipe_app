@@ -1,4 +1,4 @@
-import 'package:astro_flutter/model/drink_model.dart';
+import '../../model/drink_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
