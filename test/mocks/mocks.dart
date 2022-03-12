@@ -1,6 +1,3 @@
-export 'category/category_cubit.dart';
-export 'drink/drink_cubit.dart';
-export 'drink_category/drink_category_cubit.dart';
-export 'meal/meal_cubit.dart';
-export 'meal_detail/meal_detail_cubit.dart';
-export 'drink_detail/drink_detail_cubit.dart';
+export 'mock_category_repository.dart';
+export 'mock_drink_repository.dart';
+export 'mock_meal_repository.dart';

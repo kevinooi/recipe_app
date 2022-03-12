@@ -9,10 +9,10 @@ part 'drink_detail_event.dart';
 part 'drink_detail_state.dart';
 
 class DrinkDetailBloc extends Bloc<DrinkDetailEvent, DrinkDetailState> {
-  final DrinkRepository _drinkRepository;
+  final BaseDrinkRepository _drinkRepository;
   final CacheDrinkCubit _cacheDrinkCubit;
   DrinkDetailBloc({
-    required DrinkRepository drinkRepository,
+    required BaseDrinkRepository drinkRepository,
     required CacheDrinkCubit cacheDrinkCubit,
   })  : _drinkRepository = drinkRepository,
         _cacheDrinkCubit = cacheDrinkCubit,
