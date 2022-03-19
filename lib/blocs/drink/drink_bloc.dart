@@ -23,6 +23,11 @@ class DrinkBloc extends Bloc<DrinkEvent, DrinkState> {
     try {
       List<Drink>? drinks =
           await _drinkRepository.getDrinksByCategory(event.strDrink);
+      if (event.strDrink.toLowerCase() == 'belgian blue') {
+        emit(
+          BelgianBlue(drinks: drinks),
+        );
+      }
       emit(
         DrinkLoaded(drinks: drinks),
       );
