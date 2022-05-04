@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +38,11 @@ class DetailBody extends StatelessWidget {
                         : 300,
             // expandedHeight: 200,
             flexibleSpace: FlexibleSpaceBar(
-              titlePadding: const EdgeInsets.only(left: 20, bottom: 80),
+              titlePadding: EdgeInsets.only(
+                left: Platform.isAndroid ? 20 : 0,
+                right: Platform.isIOS ? 290 : 0,
+                bottom: 60,
+              ),
               title: Container(
                 padding: const EdgeInsets.all(1),
                 decoration: BoxDecoration(
@@ -195,7 +201,6 @@ class DetailBody extends StatelessWidget {
                         .copyWith(fontSize: 20),
                   ),
                 ),
-                const SizedBox(height: 15),
                 Expanded(
                   child: ArticleMarkdown(
                     markdownSource:

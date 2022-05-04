@@ -40,9 +40,9 @@ class MealDetailScreen extends HookWidget {
       initialIndex: 0,
     );
 
-    return Scaffold(
-      body: SafeArea(
-        child: BlocBuilder<MealDetailBloc, MealDetailState>(
+    return SafeArea(
+      child: Scaffold(
+        body: BlocBuilder<MealDetailBloc, MealDetailState>(
           builder: (context, state) {
             if (state is MealDetailLoading) {
               return const Center(child: CircularProgressIndicator());
@@ -93,9 +93,9 @@ class DrinkDetailScreen extends HookWidget {
       initialIndex: 0,
     );
 
-    return Scaffold(
-      body: SafeArea(
-        child: BlocBuilder<DrinkDetailBloc, DrinkDetailState>(
+    return SafeArea(
+      child: Scaffold(
+        body: BlocBuilder<DrinkDetailBloc, DrinkDetailState>(
           builder: (context, state) {
             if (state is DrinkDetailLoading) {
               return const Center(child: CircularProgressIndicator());
