@@ -1,9 +1,9 @@
-import 'package:astro_flutter/blocs/blocs.dart';
+import '../../blocs/blocs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../config/custom_color.dart';
-import '../../config/responsive.dart';
+import '../../core/custom_color.dart';
+import '../../core/responsive.dart';
 import '../../widgets/widgets.dart';
 
 class MenuScreen extends StatelessWidget {

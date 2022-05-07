@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-import '../../config/custom_color.dart';
+import '../../core/custom_color.dart';
 
 class ArticleMarkdown extends StatelessWidget {
   final String? markdownSource;
@@ -19,7 +19,7 @@ class ArticleMarkdown extends StatelessWidget {
             data: markdownSource!,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.all(20),
             styleSheet:
                 MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
               h1: const TextStyle(

@@ -1,14 +1,15 @@
-import 'package:astro_flutter/model/meal_model.dart';
-import 'package:astro_flutter/repositories/meals/meal_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../model/meal_model.dart';
+import '../../repositories/repositories.dart';
 
 part 'meal_event.dart';
 part 'meal_state.dart';
 
 class MealBloc extends Bloc<MealEvent, MealState> {
-  final MealRepository _mealRepository;
-  MealBloc({required MealRepository mealRepository})
+  final BaseMealRepository _mealRepository;
+  MealBloc({required BaseMealRepository mealRepository})
       : _mealRepository = mealRepository,
         super(MealLoading()) {
     on<LoadMeals>(_onLoadMeals);
@@ -20,7 +21,7 @@ class MealBloc extends Bloc<MealEvent, MealState> {
   ) async {
     emit(MealLoading());
     try {
-      List<Meal>? meals =
+      List<Meal> meals =
           await _mealRepository.getMealsByCategory(event.strCategory);
       emit(
         MealLoaded(meals: meals),

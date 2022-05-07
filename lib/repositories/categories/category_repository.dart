@@ -1,21 +1,19 @@
 import 'dart:convert';
 
-import 'package:astro_flutter/config/extensions.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:astro_flutter/model/category_model.dart';
-import 'package:astro_flutter/repositories/categories/base_category.dart';
-
+import '../../core/extensions.dart';
+import '../../model/category_model.dart';
+import 'base_category.dart';
 import '../../model/drink_category_model.dart';
 
 class CategoryRepository extends BaseCategoryRepository {
-  http.Client client = http.Client();
   CategoryRepository();
 
   @override
   Future<List<Category>> getFoodCategories() async {
     try {
-      final response = await client.get(
+      final response = await http.get(
         Uri.parse('https://www.themealdb.com/api/json/v1/1/categories.php'),
       );
       logI('food categories response', response);
@@ -40,7 +38,7 @@ class CategoryRepository extends BaseCategoryRepository {
   @override
   Future<List<DrinkCategory>> getDrinkCategories(String strCategory) async {
     try {
-      final response = await client.get(
+      final response = await http.get(
         Uri.parse(
             'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=$strCategory'),
       );

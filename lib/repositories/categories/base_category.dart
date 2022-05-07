@@ -1,5 +1,4 @@
-import 'package:astro_flutter/model/category_model.dart';
-
+import '../../model/category_model.dart';
 import '../../model/drink_category_model.dart';
 
 abstract class BaseCategoryRepository {

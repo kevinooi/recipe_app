@@ -1,18 +1,18 @@
-import 'package:astro_flutter/blocs/blocs.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../model/meal_model.dart';
 import '../../repositories/repositories.dart';
+import '../blocs.dart';
 
 part 'meal_detail_event.dart';
 part 'meal_detail_state.dart';
 
 class MealDetailBloc extends Bloc<MealDetailEvent, MealDetailState> {
-  final MealRepository _mealRepository;
+  final BaseMealRepository _mealRepository;
   final CacheMealCubit _cacheMealCubit;
   MealDetailBloc({
-    required MealRepository mealRepository,
+    required BaseMealRepository mealRepository,
     required CacheMealCubit cacheMealCubit,
   })  : _mealRepository = mealRepository,
         _cacheMealCubit = cacheMealCubit,

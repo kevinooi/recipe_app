@@ -1,14 +1,15 @@
-import 'package:astro_flutter/model/drink_model.dart';
-import 'package:astro_flutter/repositories/drinks/drink_repository.dart';
+import '../../model/drink_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../repositories/repositories.dart';
 
 part 'drink_event.dart';
 part 'drink_state.dart';
 
 class DrinkBloc extends Bloc<DrinkEvent, DrinkState> {
-  final DrinkRepository _drinkRepository;
-  DrinkBloc({required DrinkRepository drinkRepository})
+  final BaseDrinkRepository _drinkRepository;
+  DrinkBloc({required BaseDrinkRepository drinkRepository})
       : _drinkRepository = drinkRepository,
         super(DrinkLoading()) {
     on<LoadDrinks>(_onLoadDrinks);
@@ -22,6 +23,11 @@ class DrinkBloc extends Bloc<DrinkEvent, DrinkState> {
     try {
       List<Drink>? drinks =
           await _drinkRepository.getDrinksByCategory(event.strDrink);
+      if (event.strDrink.toLowerCase() == 'belgian blue') {
+        emit(
+          BelgianBlue(drinks: drinks),
+        );
+      }
       emit(
         DrinkLoaded(drinks: drinks),
       );

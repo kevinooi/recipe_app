@@ -1,15 +1,16 @@
-import 'package:astro_flutter/model/category_model.dart';
-import 'package:astro_flutter/repositories/categories/category_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../model/category_model.dart';
+import '../../repositories/repositories.dart';
 
 part 'category_event.dart';
 part 'category_state.dart';
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
-  final CategoryRepository _categoryRepository;
+  final BaseCategoryRepository _categoryRepository;
 
-  CategoryBloc({required CategoryRepository categoryRepository})
+  CategoryBloc({required BaseCategoryRepository categoryRepository})
       : _categoryRepository = categoryRepository,
         super(CategoryLoading()) {
     on<LoadFoodCategories>(_onLoadFoodCategories);
@@ -21,11 +22,8 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   ) async {
     emit(CategoryLoading());
     try {
-      List<Category>? categories =
-          await _categoryRepository.getFoodCategories();
-      emit(
-        CategoryLoaded(categories: categories),
-      );
+      List<Category> categories = await _categoryRepository.getFoodCategories();
+      emit(CategoryLoaded(categories: categories));
     } catch (_) {
       emit(CategoryError());
     }

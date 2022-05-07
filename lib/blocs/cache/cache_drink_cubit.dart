@@ -1,4 +1,4 @@
-import 'package:astro_flutter/model/drink_model.dart';
+import '../../model/drink_model.dart';
 import 'package:bloc/bloc.dart';
 
 class CacheDrinkCubit extends Cubit<Drink?> {

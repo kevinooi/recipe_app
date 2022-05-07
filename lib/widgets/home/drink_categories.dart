@@ -1,12 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:astro_flutter/model/drink_category_model.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../blocs/blocs.dart';
-import '../../config/custom_color.dart';
-import '../../config/responsive.dart';
+import '../../core/custom_color.dart';
+import '../../core/responsive.dart';
+import '../../model/drink_category_model.dart';
 
 class DrinkCategories extends StatelessWidget {
   const DrinkCategories({
@@ -46,84 +46,110 @@ class _DrinkCategoriesResponsive extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Responsive.isMobile(context)
-        ? ListView.separated(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            physics: const BouncingScrollPhysics(),
-            itemCount: drinkCategories?.length ?? 8,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            itemBuilder: (context, i) {
-              final drinkCategory = drinkCategories?[i];
-
-              return drinkCategory == null
-                  ? Shimmer.fromColors(
-                      highlightColor: Colors.white,
-                      baseColor: CustomColors.tertiaryText,
-                      child: _DrinkCategoryCard(
-                        key: Key('drink-category-$i'),
-                        drinkCategory: drinkCategory,
-                        onTap: null,
+    return BlocListener<DrinkBloc, DrinkState>(
+      listener: (context, state) async {
+        if (state is BelgianBlue) {
+          await showDialog(
+            context: context,
+            builder: (context) {
+              return Dialog(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: const [
+                    SizedBox(height: 20),
+                    Text(
+                      'Belgian Blue Special',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
                       ),
-                    )
-                  : _DrinkCategoryCard(
-                      key: Key('drink-category-$i'),
-                      drinkCategory: drinkCategory,
-                      onTap: () {
-                        context.read<DrinkBloc>().add(
-                              LoadDrinks(
-                                  strDrink: drinkCategory.strDrink ?? ''),
-                            );
-                      },
-                    );
-            },
-            separatorBuilder: (context, index) {
-              return const SizedBox(width: 10);
-            },
-          )
-        : GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: Responsive.isWideDesktop(context) ||
-                      Responsive.isDesktop(context)
-                  ? 4
-                  : 3,
-              childAspectRatio: Responsive.isTablet(context)
-                  ? 1.7
-                  : Responsive.isDesktop(context)
-                      ? 1.55
-                      : 2.8,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 20,
-            ),
-            itemCount: drinkCategories?.length ?? 12,
-            itemBuilder: (context, i) {
-              final drinkCategory = drinkCategories?[i];
-
-              return drinkCategory == null
-                  ? Shimmer.fromColors(
-                      highlightColor: Colors.white,
-                      baseColor: CustomColors.tertiaryText,
-                      child: _DrinkCategoryCard(
-                        key:
-                            Key('${drinkCategory?.strDrink?.toLowerCase()}-$i'),
-                        drinkCategory: drinkCategory,
-                        onTap: null,
-                      ),
-                    )
-                  : _DrinkCategoryCard(
-                      key: Key('${drinkCategory.strDrink?.toLowerCase()}-$i'),
-                      drinkCategory: drinkCategory,
-                      onTap: () {
-                        context.read<DrinkBloc>().add(
-                              LoadDrinks(
-                                  strDrink: drinkCategory.strDrink ?? ''),
-                            );
-                      },
-                    );
+                    ),
+                    SizedBox(height: 20),
+                  ],
+                ),
+              );
             },
           );
+        }
+      },
+      child: Responsive.isMobile(context)
+          ? ListView.separated(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              itemCount: drinkCategories?.length ?? 8,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              itemBuilder: (context, i) {
+                final drinkCategory = drinkCategories?[i];
+
+                return drinkCategory == null
+                    ? Shimmer.fromColors(
+                        highlightColor: Colors.white,
+                        baseColor: CustomColors.tertiaryText,
+                        child: _DrinkCategoryCard(
+                          key: Key('drink-category-$i'),
+                          drinkCategory: drinkCategory,
+                          onTap: null,
+                        ),
+                      )
+                    : _DrinkCategoryCard(
+                        key: Key('drink-category-$i'),
+                        drinkCategory: drinkCategory,
+                        onTap: () {
+                          context.read<DrinkBloc>().add(
+                                LoadDrinks(
+                                    strDrink: drinkCategory.strDrink ?? ''),
+                              );
+                        },
+                      );
+              },
+              separatorBuilder: (context, index) {
+                return const SizedBox(width: 10);
+              },
+            )
+          : GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: Responsive.isWideDesktop(context) ||
+                        Responsive.isDesktop(context)
+                    ? 4
+                    : 3,
+                childAspectRatio: Responsive.isTablet(context)
+                    ? 1.7
+                    : Responsive.isDesktop(context)
+                        ? 1.55
+                        : 2.8,
+                mainAxisSpacing: 20,
+                crossAxisSpacing: 20,
+              ),
+              itemCount: drinkCategories?.length ?? 12,
+              itemBuilder: (context, i) {
+                final drinkCategory = drinkCategories?[i];
+
+                return drinkCategory == null
+                    ? Shimmer.fromColors(
+                        highlightColor: Colors.white,
+                        baseColor: CustomColors.tertiaryText,
+                        child: _DrinkCategoryCard(
+                          key: Key(
+                              '${drinkCategory?.strDrink?.toLowerCase()}-$i'),
+                          drinkCategory: drinkCategory,
+                          onTap: null,
+                        ),
+                      )
+                    : _DrinkCategoryCard(
+                        key: Key('${drinkCategory.strDrink?.toLowerCase()}-$i'),
+                        drinkCategory: drinkCategory,
+                        onTap: () {
+                          context.read<DrinkBloc>().add(
+                                LoadDrinks(
+                                    strDrink: drinkCategory.strDrink ?? ''),
+                              );
+                        },
+                      );
+              },
+            ),
+    );
   }
 }
 
@@ -152,7 +178,9 @@ class _DrinkCategoryCard extends StatelessWidget {
             bottom: 5.0,
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: Responsive.isMobile(context)
+                ? MainAxisAlignment.start
+                : MainAxisAlignment.center,
             children: [
               CachedNetworkImage(
                 imageUrl: drinkCategory?.strDrinkThumb ?? '',

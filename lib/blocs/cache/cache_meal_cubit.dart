@@ -1,5 +1,6 @@
-import 'package:astro_flutter/model/meal_model.dart';
 import 'package:bloc/bloc.dart';
+
+import '../../model/meal_model.dart';
 
 class CacheMealCubit extends Cubit<Meal?> {
   CacheMealCubit() : super(null);

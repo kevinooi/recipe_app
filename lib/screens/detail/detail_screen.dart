@@ -1,10 +1,10 @@
-import 'package:astro_flutter/model/meal_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../blocs/blocs.dart';
 import '../../model/drink_model.dart';
+import '../../model/meal_model.dart';
 import '../../repositories/repositories.dart';
 import '../../widgets/widgets.dart';
 
@@ -40,9 +40,9 @@ class MealDetailScreen extends HookWidget {
       initialIndex: 0,
     );
 
-    return Scaffold(
-      body: SafeArea(
-        child: BlocBuilder<MealDetailBloc, MealDetailState>(
+    return SafeArea(
+      child: Scaffold(
+        body: BlocBuilder<MealDetailBloc, MealDetailState>(
           builder: (context, state) {
             if (state is MealDetailLoading) {
               return const Center(child: CircularProgressIndicator());
@@ -93,9 +93,9 @@ class DrinkDetailScreen extends HookWidget {
       initialIndex: 0,
     );
 
-    return Scaffold(
-      body: SafeArea(
-        child: BlocBuilder<DrinkDetailBloc, DrinkDetailState>(
+    return SafeArea(
+      child: Scaffold(
+        body: BlocBuilder<DrinkDetailBloc, DrinkDetailState>(
           builder: (context, state) {
             if (state is DrinkDetailLoading) {
               return const Center(child: CircularProgressIndicator());
