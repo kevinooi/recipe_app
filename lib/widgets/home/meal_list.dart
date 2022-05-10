@@ -1,15 +1,15 @@
 import 'dart:math';
 
-import '../../core/custom_color.dart';
-import '../../core/extensions.dart';
-import '../../core/responsive.dart';
-import '../widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/blocs.dart';
+import '../../core/custom_color.dart';
+import '../../core/extensions.dart';
+import '../../core/responsive.dart';
 import '../../model/meal_model.dart';
+import '../widgets.dart';
 
 class MealList extends StatelessWidget {
   const MealList({
