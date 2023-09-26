@@ -1,4 +1,4 @@
-import 'package:astro_flutter/blocs/blocs.dart';
+import 'package:recipe_app/blocs/blocs.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart';

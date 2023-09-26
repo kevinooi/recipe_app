@@ -133,7 +133,7 @@ class DetailBody extends StatelessWidget {
                                   '4.5 \u2022 15:06',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1!
+                                      .bodyLarge!
                                       .copyWith(
                                         color: CustomColors.primaryText
                                             .withAlpha(200),
@@ -197,7 +197,7 @@ class DetailBody extends StatelessWidget {
                     'Steps for making ${meal?.strMeal ?? drink?.strDrink}',
                     style: Theme.of(context)
                         .textTheme
-                        .headline3!
+                        .displaySmall!
                         .copyWith(fontSize: 20),
                   ),
                 ),
@@ -215,7 +215,7 @@ class DetailBody extends StatelessWidget {
                 'Sorry, no instructions provided',
                 style: Theme.of(context)
                     .textTheme
-                    .headline3!
+                    .displaySmall!
                     .copyWith(fontSize: 20),
               ),
             ),
@@ -224,7 +224,7 @@ class DetailBody extends StatelessWidget {
             child: Text(
               'Coming Soon',
               style:
-                  Theme.of(context).textTheme.headline3!.copyWith(fontSize: 20),
+                  Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 20),
             ),
           ),
         ],

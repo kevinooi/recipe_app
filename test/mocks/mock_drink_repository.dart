@@ -1,5 +1,5 @@
-import 'package:astro_flutter/model/drink_model.dart';
-import 'package:astro_flutter/repositories/repositories.dart';
+import 'package:recipe_app/model/drink_model.dart';
+import 'package:recipe_app/repositories/repositories.dart';
 
 class MockDrinkRepository extends BaseDrinkRepository {
   @override

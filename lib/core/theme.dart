@@ -32,42 +32,42 @@ ThemeData theme() {
       onSurface: CustomColors.darkBlue,
     ),
     textTheme: const TextTheme(
-      headline1: TextStyle(
+      displayLarge: TextStyle(
         color: CustomColors.primaryText,
         fontWeight: FontWeight.bold,
         fontSize: 36,
       ),
-      headline2: TextStyle(
+      displayMedium: TextStyle(
         color: CustomColors.primaryText,
         fontWeight: FontWeight.bold,
         fontSize: 24,
       ),
-      headline3: TextStyle(
+      displaySmall: TextStyle(
         color: CustomColors.primaryText,
         fontWeight: FontWeight.bold,
         fontSize: 18,
       ),
-      headline4: TextStyle(
+      headlineMedium: TextStyle(
         color: CustomColors.primaryText,
         fontWeight: FontWeight.bold,
         fontSize: 16,
       ),
-      headline5: TextStyle(
+      headlineSmall: TextStyle(
         color: CustomColors.primaryText,
         fontWeight: FontWeight.bold,
         fontSize: 14,
       ),
-      headline6: TextStyle(
+      titleLarge: TextStyle(
         color: CustomColors.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 14,
       ),
-      bodyText1: TextStyle(
+      bodyLarge: TextStyle(
         color: CustomColors.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 14,
       ),
-      bodyText2: TextStyle(
+      bodyMedium: TextStyle(
         color: CustomColors.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 12,

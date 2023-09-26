@@ -1,6 +1,6 @@
-import 'package:astro_flutter/blocs/blocs.dart';
-import 'package:astro_flutter/screens/screens.dart';
-import 'package:astro_flutter/widgets/widgets.dart';
+import 'package:recipe_app/blocs/blocs.dart';
+import 'package:recipe_app/screens/screens.dart';
+import 'package:recipe_app/widgets/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../mocks/mocks.dart';

@@ -29,7 +29,7 @@ class EmptyList extends StatelessWidget {
               // SizedBox(height: 5),
               Text(
                 message,
-                style: Theme.of(context).textTheme.headline3,
+                style: Theme.of(context).textTheme.displaySmall,
               ),
               const SizedBox(height: 20),
             ],

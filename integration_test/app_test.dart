@@ -1,6 +1,6 @@
-import 'package:astro_flutter/main.dart';
-import 'package:astro_flutter/screens/screens.dart';
-import 'package:astro_flutter/widgets/widgets.dart';
+import 'package:recipe_app/main.dart';
+import 'package:recipe_app/screens/screens.dart';
+import 'package:recipe_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -138,12 +138,12 @@ void main() {
       expect(find.byType(DrinkList), findsOneWidget);
 
       // tap on second drink category
-      await tester.tap(find.byKey(const Key('drink-category-1')));
+      await tester.tap(find.byKey(const Key('drink-category-2')));
       await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
       Future.delayed(const Duration(seconds: 2));
-      final drinkCard = find.byKey(const Key('belgian blue-0'));
-      // Verify that drink list first drink is belgian blue
+      final drinkCard = find.byKey(const Key('bleeding surgeon-0'));
+      // Verify that first drink in the list is bleeding surgeon
 
       expect(drinkCard, findsOneWidget);
 

@@ -36,7 +36,7 @@ class IngredientTab extends StatelessWidget {
                           'Ingredients For',
                           style: Theme.of(context)
                               .textTheme
-                              .headline3!
+                              .displaySmall!
                               .copyWith(fontSize: 20),
                         ),
                         const SizedBox(height: 5),
@@ -44,7 +44,7 @@ class IngredientTab extends StatelessWidget {
                           '${context.watch<ServingCubit>().state} Servings',
                           style: Theme.of(context)
                               .textTheme
-                              .headline4!
+                              .headlineMedium!
                               .copyWith(
                                 fontWeight: FontWeight.normal,
                                 color: CustomColors.primaryText.withAlpha(200),
@@ -152,7 +152,7 @@ class IngredientTab extends StatelessWidget {
                 'No Ingredients provided',
                 style: Theme.of(context)
                     .textTheme
-                    .headline3!
+                    .displaySmall!
                     .copyWith(fontSize: 20),
               ),
             ),
@@ -238,7 +238,7 @@ class _IngredientTile extends StatelessWidget {
               ingredient.ingredient,
               style: Theme.of(context)
                   .textTheme
-                  .headline4!
+                  .headlineMedium!
                   .copyWith(fontWeight: FontWeight.w500),
             ),
             if (ingredient.measurement.isNotEmpty) ...[
@@ -247,7 +247,7 @@ class _IngredientTile extends StatelessWidget {
                 ingredient.measurement,
                 style: Theme.of(context)
                     .textTheme
-                    .headline6!
+                    .titleLarge!
                     .copyWith(color: CustomColors.tertiaryText),
               ),
             ],

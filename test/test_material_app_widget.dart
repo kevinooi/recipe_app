@@ -1,4 +1,4 @@
-import 'package:astro_flutter/screens/screens.dart';
+import 'package:recipe_app/screens/screens.dart';
 import 'navigation_observer.dart';
 import 'package:flutter/material.dart';
 

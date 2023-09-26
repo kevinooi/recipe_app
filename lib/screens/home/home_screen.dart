@@ -63,8 +63,8 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 5),
-                  Row(
-                    children: const <Widget>[
+                  const Row(
+                    children: <Widget>[
                       Text(
                         'Current Location',
                         style: TextStyle(

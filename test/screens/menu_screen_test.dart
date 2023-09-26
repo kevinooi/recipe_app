@@ -1,8 +1,8 @@
-import 'package:astro_flutter/blocs/blocs.dart';
+import 'package:recipe_app/blocs/blocs.dart';
 import 'package:flutter/widgets.dart';
 import '../mocks/mocks.dart';
 import '../navigation_observer.dart';
-import 'package:astro_flutter/screens/screens.dart';
+import 'package:recipe_app/screens/screens.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../widget_test_set_up.dart';

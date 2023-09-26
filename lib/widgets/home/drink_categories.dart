@@ -52,10 +52,10 @@ class _DrinkCategoriesResponsive extends StatelessWidget {
           await showDialog(
             context: context,
             builder: (context) {
-              return Dialog(
+              return const Dialog(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: const [
+                  children: [
                     SizedBox(height: 20),
                     Text(
                       'Belgian Blue Special',
@@ -125,6 +125,7 @@ class _DrinkCategoriesResponsive extends StatelessWidget {
               itemCount: drinkCategories?.length ?? 12,
               itemBuilder: (context, i) {
                 final drinkCategory = drinkCategories?[i];
+                print('${drinkCategory?.strDrink?.toLowerCase()}-$i');
 
                 return drinkCategory == null
                     ? Shimmer.fromColors(

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(astro_flutter LANGUAGES CXX)
+project(recipe_app LANGUAGES CXX)
 
-set(BINARY_NAME "astro_flutter")
+set(BINARY_NAME "recipe_app")
 
 cmake_policy(SET CMP0063 NEW)
 
