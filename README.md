@@ -1,16 +1,24 @@
-# flutter_bloc
 
-A new Flutter project.
+# Recipe App
 
-## Getting Started
+  
 
-This project is a starting point for a Flutter application.
+  
 
-A few resources to get you started if this is your first Flutter project:
+A flutter recipe application for mobile and web made with [flutter_bloc](https://bloclibrary.dev/#/) state management.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+  
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+  
+
+## On Mobile
+
+<img  src="./lib/assets/mobile/1.png"  alt="preview_1" /><img  src="./lib/assets/mobile/2.png"  alt="preview_2" />
+<img  src="./lib/assets/mobile/3.png"  alt="preview_3" /><img  src="./lib/assets/mobile/4.png"  alt="preview_4" />
+<img  src="./lib/assets/mobile/5.png"  alt="preview_5" />
+
+## On Web
+
+<img  src="./lib/assets/web/1.png"  alt="preview_1" /><img  src="./lib/assets/web/2.png"  alt="preview_2" />
+<img  src="./lib/assets/web/3.png"  alt="preview_3" /><img  src="./lib/assets/web/4.png"  alt="preview_4" />
+<img  src="./lib/assets/web/5.png"  alt="preview_5" /><img  src="./lib/assets/web/6.png"  alt="preview_6" />
