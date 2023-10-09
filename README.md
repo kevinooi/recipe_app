@@ -5,8 +5,7 @@
 
   
 
-A flutter recipe application for mobile and web made with [flutter_bloc](https://bloclibrary.dev/#/) state management.
-
+A flutter recipe mobile and web application build using [flutter_bloc](https://bloclibrary.dev/#/) state management.
   
 
   
