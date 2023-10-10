@@ -1,23 +1,21 @@
-
 # Recipe App
 
-  
+<img  src="./lib/assets/recipeapp.png"  alt="recipeapp_preview" /> 
 
-  
+A versatile application available on both mobile and web platforms, offering an extensive range of food and drink recipes categorized along with detailed ingredient information.
 
-A flutter recipe mobile and web application build using [flutter_bloc](https://bloclibrary.dev/#/) state management.
-  
+## Flutter Test
 
-  
+> **For Unit/Widget Test:**
 
-## On Mobile
+Use `flutter test` command to run both unit tests and widget tests in Flutter.
 
-<img  src="./lib/assets/mobile/1.png"  alt="preview_1" /> <img  src="./lib/assets/mobile/2.png"  alt="preview_2" />
+If you want to run tests in a specific file, you can provide the path to the test file:
 
-<img  src="./lib/assets/mobile/3.png"  alt="preview_3" /> <img  src="./lib/assets/mobile/4.png"  alt="preview_4" />
+    flutter test path/to/test_file.dart
+    
+Replace `path/to/test_file.dart` with the actual path to the test file.
 
-## On Web
+> **For Integration Test:**
 
-<img  src="./lib/assets/web/1.png"  alt="preview_1" />
-
-<img  src="./lib/assets/web/2.png"  alt="preview_2" />
+Run `flutter test integration_test` command to execute integration tests after establishing a connection to a device.
