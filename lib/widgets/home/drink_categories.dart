@@ -125,7 +125,6 @@ class _DrinkCategoriesResponsive extends StatelessWidget {
               itemCount: drinkCategories?.length ?? 12,
               itemBuilder: (context, i) {
                 final drinkCategory = drinkCategories?[i];
-                print('${drinkCategory?.strDrink?.toLowerCase()}-$i');
 
                 return drinkCategory == null
                     ? Shimmer.fromColors(
