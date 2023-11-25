@@ -2,7 +2,6 @@
 
 <img  src="./lib/assets/recipeapp.png"  alt="recipeapp_preview" /> 
 
-A versatile application available on both mobile and web platforms, offering an extensive range of food and drink recipes categorized along with detailed ingredient information.
 
 ## Flutter Test
 
